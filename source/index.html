@@ -1,16 +1,28 @@
-<html>
-	<head>
-		<script src="http://code.createjs.com/easeljs-0.7.0.min.js"></script>
-		<script src="http://code.createjs.com/soundjs-0.6.0.min.js"></script>
-		<script src="js/main.js"></script>
-		<link rel="stylesheet" href="css/style.css">
-	</head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+</head>
 
-	<body onload="init();">
-		<canvas id="demoCanvas"
-         onclick="handleClick();"
-         class="playSound"
-         width="500"
-         height="300"/>
-	</body>
+<body onload="init();">
+
+<div id="content">
+    <canvas id="gameCanvas" width="960" height="400"
+            style="background:black;"></canvas>
+</div>
+
+<script src="lib/preloadjs-NEXT.min.js"></script>
+<script src="lib/soundjs-NEXT.min.js"></script>
+
+<script src="lib/easeljs-NEXT.combined.js"></script>
+<!-- We also provide hosted minified versions of all CreateJS libraries.
+  http://code.createjs.com -->
+
+<!-- Game script below -->
+<script type="text/javascript" src="js/SpaceRock.js"></script>
+<script type="text/javascript" src="js/Ship.js"></script>
+
+<script type="text/javascript" src="js/main.js"></script>
+
+</body>
 </html>
