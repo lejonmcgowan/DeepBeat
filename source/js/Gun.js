@@ -2,10 +2,10 @@
 
     function Gun() {
         this.Container_constructor();
-        this.addChild(new createjs.Bitmap(preload.getResult("gun")));
+        this.addChild(new createjs.Bitmap(DeepBeat.preload.getResult("gun")));
         this.on("tick", p.tick);
 
-        addKeyHandler(this, "key-right", this.test);
+        DeepBeat.addKeyHandler(this, "key-right", this.test);
         
     }
     var p = createjs.extend(Gun, createjs.Container);
