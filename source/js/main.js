@@ -8,6 +8,9 @@ DeepBeat = {
     keysDown: {},
     keysEventDispatcher: null,
 
+    currentLevel: null,
+    firstLevel: null,
+
     KEYCODES: {
         "13": "enter",
         "32": "space",
@@ -19,8 +22,9 @@ DeepBeat = {
         "68": "right"
     },
 
-    init: function() {
+    init: function(level) {
         var game = this;
+        this.firstLevel = level;
 
         document.onkeydown = function(e){game.handleKeyDown(e);}
         document.onkeyup = function(e){game.handleKeyUp(e);};
@@ -33,11 +37,6 @@ DeepBeat = {
 
         var assetsPath = "../assets/";
         this.manifest = [
-            {id: "begin", src: "sounds/spawn.ogg"},
-            {id: "break", src: "sounds/break.ogg", data: 6},
-            {id: "death", src: "sounds/death.ogg"},
-            {id: "laser", src: "sounds/shot.ogg", data: 6},
-            {id: "music", src: "sounds/music.ogg"},
             {id: "gun", src: "images/switchoff.png"}
         ];
 
@@ -58,19 +57,18 @@ DeepBeat = {
 
     updateLoading: function() {},
     doneLoading: function() {
-        this.restart();
+        var game = this;
+        this.setLevel(this.firstLevel);
+        createjs.Ticker.addEventListener("tick", function(){game.tick();});
     },
 
-    restart: function() {
-        var game = this;
-
-        this.stage.removeAllChildren();
-
-        this.stage.addChild(new Gun());
-
-        if (!createjs.Ticker.hasEventListener("tick")) {
-            createjs.Ticker.addEventListener("tick", function(){game.tick();});
+    setLevel: function(level) {
+        if(this.currentLevel) {
+            level.end();
         }
+        this.stage.removeAllChildren();
+        this.currentLevel = level;
+        this.currentLevel.start(this.stage);
     },
 
     tick: function(event) {
