@@ -77,6 +77,7 @@ DeepBeat = {
     tick: function(event) {
         this.handleKeys();
         this.stage.update(event);
+        this.currentLevel.tick();
     },
 
     handleKeys: function() {
