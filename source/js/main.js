@@ -17,9 +17,11 @@ DeepBeat = {
         "38": "up",
         "37": "left",
         "39": "right",
+        "40": "down",
         "87": "up",
         "65": "left",
-        "68": "right"
+        "68": "right",
+        "83": "down"
     },
 
     init: function(level) {
@@ -59,6 +61,7 @@ DeepBeat = {
     doneLoading: function() {
         var game = this;
         this.setLevel(this.firstLevel);
+        createjs.Ticker.interval = 17;
         createjs.Ticker.addEventListener("tick", function(){game.tick();});
     },
 
