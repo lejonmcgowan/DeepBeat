@@ -1,21 +1,25 @@
 <html>
+
 	<head>
-		<script src="https://code.createjs.com/soundjs-0.6.0.min.js"></script>
-		<script src="https://code.createjs.com/easeljs-0.8.0.min.js"></script>
-		<script src="js/main.js"></script>
-		<script src="js/sound.js"></script>
-		<link rel="stylesheet" href="css/style.css">
+	    <title>Deep Beat</title>
+	    <meta charset="utf-8">
 	</head>
 
-	<body onload="init();">
-		<canvas id="demoCanvas"
-         onclick="handleClick();"
-         class="playSound"
-         width="500"
-         height="300">
-         </canvas>
+	<body onload="DeepBeat.init(DeepBeatLevels.level1);">
 
-         <button onclick="playSound();setInterval('log()', 1000);" class="playSound">Play Sound</button>
-         <button onclick="stopSound();" class="playSound">Stop Sound</button>
+		<div id="content">
+		    <canvas id="gameCanvas" width="1024" height="608" style="background:black;"></canvas>
+		</div>
+
+		<script src="lib/preloadjs-NEXT.min.js"></script>
+		<script src="lib/soundjs-NEXT.min.js"></script>
+		<script src="lib/easeljs-NEXT.combined.js"></script>
+
+		<script type="text/javascript" src="js/Enemy.js"></script>
+		<script type="text/javascript" src="js/Gun.js"></script>
+		<script type="text/javascript" src="js/Levels.js"></script>
+		<script type="text/javascript" src="js/main.js"></script>
+
 	</body>
+
 </html>
