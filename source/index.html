@@ -1,8 +1,9 @@
 <html>
 	<head>
-		<script src="http://code.createjs.com/easeljs-0.7.0.min.js"></script>
-		<script src="http://code.createjs.com/soundjs-0.6.0.min.js"></script>
+		<script src="https://code.createjs.com/soundjs-0.6.0.min.js"></script>
+		<script src="https://code.createjs.com/easeljs-0.8.0.min.js"></script>
 		<script src="js/main.js"></script>
+		<script src="js/sound.js"></script>
 		<link rel="stylesheet" href="css/style.css">
 	</head>
 
@@ -11,6 +12,10 @@
          onclick="handleClick();"
          class="playSound"
          width="500"
-         height="300"/>
+         height="300">
+         </canvas>
+
+         <button onclick="playSound();setInterval('log()', 1000);" class="playSound">Play Sound</button>
+         <button onclick="stopSound();" class="playSound">Stop Sound</button>
 	</body>
 </html>
