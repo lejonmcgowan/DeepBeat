@@ -1,41 +1,49 @@
 (function (window) {
 
-    var spawnEnemies = function(enemies, time, stage) {
-        if(enemies.length && time > enemies[0].time) {
-            stage.addChild(new enemies[0].type());
-            enemies.splice(0,1);
-        }
+    var Level = function(stage) {
+        this.stage = stage;
     };
 
-    window.DeepBeatLevels = {
-        level1: {
-            start: function(stage) {
-                this.stage = stage;
-                stage.addChild(new Gun());
-            },
+    Level.prototype = {
+        spawnEnemies: function() {
+            if(this.enemies.length && this.music.getPosition() > this.enemies[0].time) {
+                this.stage.addChild(new this.enemies[0].type());
+                this.enemies.splice(0,1);
+            }
+        },
 
-            end: function() {},
+        stage: null,
+        enemies: [],
+        music: null,
 
+        tick: function() {},
+
+        end: function() {}
+    }
+
+    window.DeepBeatLevels = {};
+
+    window.DeepBeatLevels.Level1 = function(stage) {
+        Level.apply(this, [stage]);
+        stage.addChild(new Gun());
+        this.music = createjs.Sound.play("music");
+    };
+
+    window.DeepBeatLevels.Level1.prototype = _.extend(new Level(), {
+        enemies: [{
             time: 0,
+            type: Enemy
+        }, {
+            time: 100,
+            type: Enemy
+        }, {
+            time: 400,
+            type: Enemy
+        }],
 
-            tick: function() {
-                this.time++;
-                spawnEnemies(this.enemies, this.time, this.stage);
-            },
-
-            enemies: [{
-                time: 0,
-                type: Enemy
-            }, {
-                time: 100,
-                type: Enemy
-            }, {
-                time: 400,
-                type: Enemy
-            }],
-
-            music: null,
-            musicData: null
+        tick: function() {
+            this.spawnEnemies();
         }
-    };
+    });
+
 }(window));
