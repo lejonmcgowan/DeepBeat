@@ -20,7 +20,17 @@
         this.laser.regY = 16;
         this.laserTimer = 0;
 
-        this.addChild(new createjs.Bitmap(DeepBeat.preload.getResult("gun")));
+        this.collisionImageHor = new Image(1024, 32);
+        this.collisionBitmap = new createjs.Bitmap(this.collisionImageHor);
+        this.collisionBitmap.regX = 16;
+        this.collisionBitmap.regY = 16;
+        this.addChild(this.collisionBitmap);
+
+        this.regX = 16;
+        this.regY = 16;
+
+        this.bitmap = new createjs.Bitmap(DeepBeat.preload.getResult("gun"));
+        this.addChild(this.bitmap);
         this.on("tick", p.tick);
         this.x = 500;
         this.y = 288;
@@ -61,6 +71,11 @@
             createjs.Sound.setMute(!createjs.Sound.getMute());
         });
         
+        DeepBeat.addCollisionHandler(this, this.collisionBitmap, "Enemy", function() {
+            if(this.laserTimer > 0) {
+                console.log("hi");
+            }
+        });
     }
     var p = createjs.extend(Gun, createjs.Container);
     window.Gun = createjs.promote(Gun, "Container")
@@ -76,11 +91,11 @@
     p.updateDirection = function(direction) {
         if(this.direction == null && direction != null) {
             this.addChild(this.laserAim);
-            this.laser.rotation = this.laserAim.rotation = direction;
+            this.rotation = direction;
         } else if(this.direction != null && direction == null) {
             this.removeChild(this.laserAim);
         } else if(direction != null) {
-            this.laser.rotation = this.laserAim.rotation = direction;
+            this.rotation = direction;
         }
         this.direction = direction;
     }

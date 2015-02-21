@@ -11,6 +11,12 @@ DeepBeat = {
     currentLevel: null,
     firstLevel: null,
 
+    collisionTypes: {
+        "Enemy": []
+    },
+
+    collisionFroms: [],
+
     KEYCODES: {
         "13": "enter",
         "32": "space",
@@ -38,12 +44,22 @@ DeepBeat = {
         this.canvas = document.getElementById("gameCanvas");
         this.stage = new createjs.Stage(this.canvas);
         this.keysEventDispatcher = new createjs.EventDispatcher();
+        
+        // Loading message
+		this.messageField = new createjs.Text("Loading", "bold 24px Arial", "#FFFFFF");
+		this.messageField.maxWidth = 1000;
+		this.messageField.textAlign = "center";
+		this.messageField.textBaseline = "middle";
+		this.messageField.x = this.canvas.width / 2;
+		this.messageField.y = this.canvas.height / 2;
+		this.stage.addChild(this.messageField);
+        this.stage.update();
 
         // Preload the following assets
         var assetsPath = "../assets/";
         this.manifest = [
-            {id: "gun", src: "images/switchoff.png"},
-            {id: "music", src: "audio/music.mp3"}
+            {id: "music", src: "audio/music.mp3"},
+            {id: "gun", src: "images/switchoff.png"}
         ];
         
         this.preload = new createjs.LoadQueue(true, assetsPath);
@@ -59,9 +75,14 @@ DeepBeat = {
         }
         createjs.Sound.stop();
     },
-
-    updateLoading: function() {},
+    
+    updateLoading: function() {
+        // TODO fancy ass 3D circle loader... maybe
+    },
     doneLoading: function() {
+		// Remove loading message
+        this.stage.removeChild(this.messageField);
+        
         var game = this;
         this.setLevel(this.firstLevel);
         createjs.Ticker.interval = 17;
@@ -81,6 +102,7 @@ DeepBeat = {
 
     tick: function(event) {
         this.handleKeys();
+        this.handleCollisions();
         this.stage.update(event);
         this.currentLevel.tick();
     },
@@ -110,13 +132,52 @@ DeepBeat = {
     },
 
     addKeyHandler: function(obj, k, func) {
+        var game = this;
         var handle = function() {
             func.apply(obj);
         };
         this.keysEventDispatcher.addEventListener(k, handle);
-        obj.on("remove", function() {
-            this.keysEventDispatcher.removeEventListener(k, handle);
+        obj.on("removed", function() {
+            game.keysEventDispatcher.removeEventListener(k, handle);
         });
+    },
+
+    addCollisionType: function(obj, typeString) {
+        var game = this;
+        obj.on("added", function() {
+            game.collisionTypes[typeString].push(obj);
+        });
+        obj.on("removed", function() {
+            game.collisionTypes[typeString].splice(game.collisions[typeString].indexOf(obj), 1);
+        });
+    },
+
+    addCollisionHandler: function(obj, sprite, typeString, func) {
+        var game = this;
+
+        var info = {
+            from: sprite,
+            to: typeString,
+            func: func,
+            obj: obj
+        };
+
+        obj.on("added", function() {
+            game.collisionFroms.push(info);
+        });
+        obj.on("removed", function() {
+            game.collisionFroms.splice(game.collisionFroms.indexOf(info), 1);
+        });
+    },
+
+    handleCollisions: function() {
+        for(var i in this.collisionFroms) {
+            for(var j in this.collisionTypes[this.collisionFroms[i].to]) {
+                if(ndgmr.checkRectCollision(this.collisionFroms[i].from, this.collisionTypes[this.collisionFroms[i].to][j])) {
+                    this.collisionFroms[i].func.apply(this.collisionFroms[i].obj);
+                }
+            }
+        }
     }
 };
 
