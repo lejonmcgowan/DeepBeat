@@ -2,12 +2,18 @@
 
     var Level = function(stage) {
         this.stage = stage;
+        this.lastTime = 0;
     };
 
     Level.prototype = {
         spawnEnemies: function() {
-            if(this.enemies.length && this.music.getPosition() > this.enemies[0].time) {
-                this.stage.addChild(new this.enemies[0].type());
+
+            var position = this.music.getPosition();
+            DeepBeat.dt = position - this.lastTime;
+            this.lastTime = position;
+
+            while(this.enemies.length && (position + this.enemies[0].type.prototype.timeToSound()) > this.enemies[0].beat * this.beatRate) {
+                this.stage.addChild(new this.enemies[0].type(this.enemies[0].params));
                 this.enemies.splice(0,1);
             }
         },
@@ -30,15 +36,20 @@
     };
 
     window.DeepBeatLevels.Level1.prototype = _.extend(new Level(), {
+        beatRate: 1000,
+
         enemies: [{
-            time: 0,
-            type: Enemy
+            beat: 6,
+            type: Enemy,
+            params: []
         }, {
-            time: 100,
-            type: Enemy
+            beat: 7,
+            type: Enemy,
+            params: []
         }, {
-            time: 400,
-            type: Enemy
+            beat: 10,
+            type: Enemy,
+            params: []
         }],
 
         tick: function() {
