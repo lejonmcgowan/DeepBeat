@@ -44,12 +44,22 @@ DeepBeat = {
         this.canvas = document.getElementById("gameCanvas");
         this.stage = new createjs.Stage(this.canvas);
         this.keysEventDispatcher = new createjs.EventDispatcher();
+        
+        // Loading message
+		this.messageField = new createjs.Text("Loading", "bold 24px Arial", "#FFFFFF");
+		this.messageField.maxWidth = 1000;
+		this.messageField.textAlign = "center";
+		this.messageField.textBaseline = "middle";
+		this.messageField.x = this.canvas.width / 2;
+		this.messageField.y = this.canvas.height / 2;
+		this.stage.addChild(this.messageField);
+        this.stage.update();
 
         // Preload the following assets
         var assetsPath = "../assets/";
         this.manifest = [
-            {id: "gun", src: "images/switchoff.png"},
-            {id: "music", src: "audio/music.mp3"}
+            {id: "music", src: "audio/music.mp3"},
+            {id: "gun", src: "images/switchoff.png"}
         ];
         
         this.preload = new createjs.LoadQueue(true, assetsPath);
@@ -65,9 +75,14 @@ DeepBeat = {
         }
         createjs.Sound.stop();
     },
-
-    updateLoading: function() {},
+    
+    updateLoading: function() {
+        // TODO fancy ass 3D circle loader... maybe
+    },
     doneLoading: function() {
+		// Remove loading message
+        this.stage.removeChild(this.messageField);
+        
         var game = this;
         this.setLevel(this.firstLevel);
         createjs.Ticker.interval = 17;
