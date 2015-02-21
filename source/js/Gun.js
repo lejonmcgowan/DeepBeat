@@ -22,18 +22,21 @@
 
         this.addChild(new createjs.Bitmap(DeepBeat.preload.getResult("gun")));
         this.on("tick", p.tick);
-        this.x = 0;
+        this.x = 500;
         this.y = 288;
         this.direction = null;
 
         DeepBeat.addKeyHandler(this, "key-up", function() {
-            this.updateDirection(-30);
+            this.updateDirection(-90);
         });
         DeepBeat.addKeyHandler(this, "key-right", function() {
             this.updateDirection(0);
         });
         DeepBeat.addKeyHandler(this, "key-down", function() {
-            this.updateDirection(30);
+            this.updateDirection(90);
+        });
+        DeepBeat.addKeyHandler(this, "key-left", function() {
+            this.updateDirection(180);
         });
         DeepBeat.addKeyHandler(this, "keyup-up", function() {
             this.updateDirection(null);
@@ -44,11 +47,18 @@
         DeepBeat.addKeyHandler(this, "keyup-down", function() {
             this.updateDirection(null);
         });
+        DeepBeat.addKeyHandler(this, "keyup-left", function() {
+            this.updateDirection(null);
+        });
         DeepBeat.addKeyHandler(this, "keydown-space", function() {
-            if(this.direction != null) {
+            if (this.direction != null) {
                 this.addChild(this.laser);
                 this.laserTimer = 7;
             }
+        });
+        DeepBeat.addKeyHandler(this, "keydown-mute", function() {
+            // Toggle muting all audio
+            createjs.Sound.setMute(!createjs.Sound.getMute());
         });
         
     }

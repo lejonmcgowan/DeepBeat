@@ -21,7 +21,9 @@ DeepBeat = {
         "87": "up",
         "65": "left",
         "68": "right",
-        "83": "down"
+        "83": "down",
+        "109": "mute",
+        "77": "mute"
     },
 
     init: function(level) {
@@ -37,12 +39,13 @@ DeepBeat = {
         this.stage = new createjs.Stage(this.canvas);
         this.keysEventDispatcher = new createjs.EventDispatcher();
 
+        // Preload the following assets
         var assetsPath = "../assets/";
         this.manifest = [
-            {id: "gun", src: "images/switchoff.png"}
+            {id: "gun", src: "images/switchoff.png"},
+            {id: "music", src: "audio/music.mp3"}
         ];
-
-        createjs.Sound.alternateExtensions = ["mp3"];
+        
         this.preload = new createjs.LoadQueue(true, assetsPath);
         this.preload.installPlugin(createjs.Sound);
         this.preload.addEventListener("complete", function(){game.doneLoading();});
@@ -63,6 +66,8 @@ DeepBeat = {
         this.setLevel(this.firstLevel);
         createjs.Ticker.interval = 17;
         createjs.Ticker.addEventListener("tick", function(){game.tick();});
+        // Play music after it was preloaded
+        createjs.Sound.play("music");
     },
 
     setLevel: function(level) {
