@@ -51,10 +51,14 @@
             this.updateDirection(null);
         });
         DeepBeat.addKeyHandler(this, "keydown-space", function() {
-            if(this.direction != null) {
+            if (this.direction != null) {
                 this.addChild(this.laser);
                 this.laserTimer = 7;
             }
+        });
+        DeepBeat.addKeyHandler(this, "keydown-mute", function() {
+            // Toggle muting all audio
+            createjs.Sound.setMute(!createjs.Sound.getMute());
         });
         
     }
