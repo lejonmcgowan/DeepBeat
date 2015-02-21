@@ -7,6 +7,8 @@
         this.on("tick", p.tick);
         this.x = 1024;
         this.y = Math.random() * 600;
+
+        DeepBeat.addCollisionType(this, "Enemy");
     }
     var p = createjs.extend(Enemy, createjs.Container);
     window.Enemy = createjs.promote(Enemy, "Container")

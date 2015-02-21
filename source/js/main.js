@@ -11,6 +11,12 @@ DeepBeat = {
     currentLevel: null,
     firstLevel: null,
 
+    collisionTypes: {
+        "Enemy": []
+    },
+
+    collisionFroms: [],
+
     KEYCODES: {
         "13": "enter",
         "32": "space",
@@ -79,6 +85,7 @@ DeepBeat = {
 
     tick: function(event) {
         this.handleKeys();
+        this.handleCollisions();
         this.stage.update(event);
         this.currentLevel.tick();
     },
@@ -108,13 +115,52 @@ DeepBeat = {
     },
 
     addKeyHandler: function(obj, k, func) {
+        var game = this;
         var handle = function() {
             func.apply(obj);
         };
         this.keysEventDispatcher.addEventListener(k, handle);
-        obj.on("remove", function() {
-            this.keysEventDispatcher.removeEventListener(k, handle);
+        obj.on("removed", function() {
+            game.keysEventDispatcher.removeEventListener(k, handle);
         });
+    },
+
+    addCollisionType: function(obj, typeString) {
+        var game = this;
+        obj.on("added", function() {
+            game.collisionTypes[typeString].push(obj);
+        });
+        obj.on("removed", function() {
+            game.collisionTypes[typeString].splice(game.collisions[typeString].indexOf(obj), 1);
+        });
+    },
+
+    addCollisionHandler: function(obj, sprite, typeString, func) {
+        var game = this;
+
+        var info = {
+            from: sprite,
+            to: typeString,
+            func: func,
+            obj: obj
+        };
+
+        obj.on("added", function() {
+            game.collisionFroms.push(info);
+        });
+        obj.on("removed", function() {
+            game.collisionFroms.splice(game.collisionFroms.indexOf(info), 1);
+        });
+    },
+
+    handleCollisions: function() {
+        for(var i in this.collisionFroms) {
+            for(var j in this.collisionTypes[this.collisionFroms[i].to]) {
+                if(ndgmr.checkRectCollision(this.collisionFroms[i].from, this.collisionTypes[this.collisionFroms[i].to][j])) {
+                    this.collisionFroms[i].func.apply(this.collisionFroms[i].obj);
+                }
+            }
+        }
     }
 };
 
