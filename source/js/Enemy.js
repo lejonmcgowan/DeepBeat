@@ -14,7 +14,11 @@
     window.Enemy = createjs.promote(Enemy, "Container")
 
     p.tick = function (event) {
-        this.x -= 3;
+        this.x -= 0.1 * DeepBeat.dt;
     }
+
+    p.timeToSound = function() {
+        return (1024/2.0) / 0.1;
+    };
     
 }(window));

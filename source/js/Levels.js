@@ -1,41 +1,60 @@
 (function (window) {
 
-    var spawnEnemies = function(enemies, time, stage) {
-        if(enemies.length && time > enemies[0].time) {
-            stage.addChild(new enemies[0].type());
-            enemies.splice(0,1);
-        }
+    var Level = function(stage) {
+        this.stage = stage;
+        this.lastTime = 0;
     };
 
-    window.DeepBeatLevels = {
-        level1: {
-            start: function(stage) {
-                this.stage = stage;
-                stage.addChild(new Gun());
-            },
+    Level.prototype = {
+        spawnEnemies: function() {
 
-            end: function() {},
+            var position = this.music.getPosition();
+            DeepBeat.dt = position - this.lastTime;
+            this.lastTime = position;
 
-            time: 0,
+            while(this.enemies.length && (position + this.enemies[0].type.prototype.timeToSound()) > this.enemies[0].beat * this.beatRate) {
+                this.stage.addChild(new this.enemies[0].type(this.enemies[0].params));
+                this.enemies.splice(0,1);
+            }
+        },
 
-            tick: function() {
-                this.time++;
-                spawnEnemies(this.enemies, this.time, this.stage);
-            },
+        stage: null,
+        enemies: [],
+        music: null,
 
-            enemies: [{
-                time: 0,
-                type: Enemy
-            }, {
-                time: 100,
-                type: Enemy
-            }, {
-                time: 400,
-                type: Enemy
-            }],
+        tick: function() {},
 
-            music: null,
-            musicData: null
-        }
+        end: function() {}
+    }
+
+    window.DeepBeatLevels = {};
+
+    window.DeepBeatLevels.Level1 = function(stage) {
+        Level.apply(this, [stage]);
+        stage.addChild(new Gun());
+        this.music = createjs.Sound.play("music");
     };
+
+    window.DeepBeatLevels.Level1.prototype = _.extend(new Level(), {
+        beatRate: 1000,
+
+        enemies: [{
+            beat: 6,
+            type: Enemy,
+            params: []
+        }, {
+            beat: 7,
+            type: Enemy,
+            params: []
+        }, {
+            beat: 10,
+            type: Enemy,
+            params: []
+        }],
+
+        tick: function() {
+            this.spawnEnemies();
+        }
+    });
+
 }(window));

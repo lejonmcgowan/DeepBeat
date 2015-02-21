@@ -17,6 +17,8 @@ DeepBeat = {
 
     collisionFroms: [],
 
+    dt: 0,
+
     KEYCODES: {
         "13": "enter",
         "32": "space",
@@ -88,16 +90,15 @@ DeepBeat = {
         createjs.Ticker.interval = 17;
         createjs.Ticker.addEventListener("tick", function(){game.tick();});
         // Play music after it was preloaded
-        createjs.Sound.play("music");
     },
 
     setLevel: function(level) {
+        createjs.Sound.stop();
         if(this.currentLevel) {
             level.end();
         }
         this.stage.removeAllChildren();
-        this.currentLevel = level;
-        this.currentLevel.start(this.stage);
+        this.currentLevel = new level(this.stage);
     },
 
     tick: function(event) {
