@@ -27,7 +27,9 @@ DeepBeat = {
         "87": "up",
         "65": "left",
         "68": "right",
-        "83": "down"
+        "83": "down",
+        "109": "mute",
+        "77": "mute"
     },
 
     init: function(level) {
