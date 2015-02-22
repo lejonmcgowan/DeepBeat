@@ -33,17 +33,21 @@
         this.x = 0;
         this.y = 0;
 
-        DeepBeat.addKeyHandler(this, "key-up", function() {
+        DeepBeat.addKeyHandler(this, "keydown-up", function() {
             this.updateAim("up");
+            this.updateLaser();
         });
-        DeepBeat.addKeyHandler(this, "key-right", function() {
+        DeepBeat.addKeyHandler(this, "keydown-right", function() {
             this.updateAim("right");
+            this.updateLaser();
         });
-        DeepBeat.addKeyHandler(this, "key-down", function() {
+        DeepBeat.addKeyHandler(this, "keydown-down", function() {
             this.updateAim("down");
+            this.updateLaser();
         });
-        DeepBeat.addKeyHandler(this, "key-left", function() {
+        DeepBeat.addKeyHandler(this, "keydown-left", function() {
             this.updateAim("left");
+            this.updateLaser();
         });
         DeepBeat.addKeyHandler(this, "keyup-up", function() {
             this.updateAim(null);
@@ -58,7 +62,7 @@
             this.updateAim(null);
         });
         DeepBeat.addKeyHandler(this, "keydown-space", function() {
-            this.updateLaser();
+            this.updatePosition();
         });
         DeepBeat.addKeyHandler(this, "keydown-mute", function() {
             // Toggle muting all audio
@@ -81,6 +85,9 @@
     }
 
     p.updateAim = function(direction) {
+        if(this.currentLaser) {
+            return;
+        }
         if(this.currentDirection != null) {
             this.removeChild(this.currentAim);
             this.currentDirection = null;
@@ -96,14 +103,20 @@
     };
 
     p.updateLaser = function() {
-        if(this.currentDirection && !this.currentLaser) {
+        if(!this.currentLaser) {
             this.laserNodes[this.laserNode.x][this.laserNode.y].bitmap.alpha = 0.5;
-            this.removeChild(this.currentAim);
             this.currentLaser = this.laserNodes[this.laserNode.x][this.laserNode.y][this.currentDirection].laser;
             this.currentCollision = this.laserNodes[this.laserNode.x][this.laserNode.y][this.currentDirection].collision;
             this.addChild(this.currentLaser);
             this.addChild(this.currentCollision);
             this.laserTimer = 300;
+        }
+    };
+
+    p.updatePosition = function() {
+        if(this.currentDirection) {
+            this.removeChild(this.currentAim);
+            this.laserNodes[this.laserNode.x][this.laserNode.y].bitmap.alpha = 0.5;
             if(this.currentDirection == "right")
                 this.laserNode.x++;
             if(this.currentDirection == "left")
