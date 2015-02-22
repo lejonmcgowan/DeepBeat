@@ -50,8 +50,11 @@
     
     // Converts the BPM to a beat rate (milliseconds between each beat)
     var bpmToBeatRate = function(bpm) {
-        // TODO calc beatRate (milliseconds between beats)
         return (1 / bpm) * 60 * 1000;
+    }
+    
+    var randBool = function() {
+        return Math.random()<.5;
     }
 
     window.DeepBeatLevels = {};
@@ -68,9 +71,24 @@
         addDiagonal(this.enemies, 25, 5, 1, 0.3, 0, -1, 750, 608, 250, 608);
         addDiagonal(this.enemies, 30, 5, 1, 0.07, 0, 1, 250, 0, 750, 0);
         */
-        // Basic generation to test callibration
-        for (var i = 1; i < 60; i++) {
-            addDiagonal(this.enemies, i * 8, 4, 1, 0.1, -1, 0, 1024, 50, 1024, 250);
+        // Basic random enemy generator
+        for (var i = 1; i < 50; i++) {
+            var beatStart = i * 4;
+            var number = 4;
+            var beatIncrement = Math.floor(Math.random() * 3) / 2; // quarter, eighth, or single beat
+            var speed = (Math.random() / 4) + 0.1;
+            
+            var startFromSide = randBool();
+            var startFromSubSide = randBool(); // start on either left or top side
+            
+            var startX = startFromSide ? (randBool() ? 0 : 1024) : (startFromSubSide ? 50 : 600);
+            var startY = startFromSide ? (startFromSubSide ? 50 : 400) : (randBool() ? 0 : 608);
+            var endX = startFromSide ? startX : (startFromSubSide ? 450 : 1000);
+            var endY = startFromSide ? (startFromSubSide ? 250 : 550) : startY;
+            
+            var xDir = startFromSide ? (startX == 0 ? 1 : -1) : 0;
+            var yDir = startFromSide ? 0 : (startY == 0 ? 1 : -1);
+            addDiagonal(this.enemies, beatStart, number, beatIncrement, speed, xDir, yDir, startX, startY, endX, endY);
         }
         this.enemies = sortEnemies(this.beatRate, this.enemies);
     };
