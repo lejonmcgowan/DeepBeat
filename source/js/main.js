@@ -60,7 +60,7 @@ DeepBeat = {
         // Preload the following assets
         var assetsPath = "../assets/";
         this.manifest = [
-            {id: "music", src: "audio/music.mp3"},
+            {id: "music", src: "audio/Phazd_tobycreed.mp3"},
             {id: "gun", src: "images/switchoff.png"}
         ];
         
