@@ -76,14 +76,17 @@
     window.DeepBeatLevels.Level1 = function(stage) {
         Level.apply(this, [stage]);
         stage.addChild(new Gun());
-        this.music = createjs.Sound.play("music");
+        stage.addChild(new Blackhole());
+        this.music = createjs.Sound.play("level1Music");
         this.enemies = [];
 
-        // Randomly add enemies coming from top, left, bottom, and right
-        for (var i = 1; i < 50; i++) {
+        // Randomly add enemies in groups of 4 coming from top, left, bottom, and right
+        for (var i = 1; i < 50; i+=4) {
             var xDir = Math.floor(Math.random()*3) - 1;
             var yDir = xDir == 0 ? Math.floor(Math.random()*3) - 1 : 0;
-            addEnemy(this.enemies, i, 0.1, xDir, yDir);
+            for (var j = 1; j < 5; j++) {
+                addEnemy(this.enemies, i+j, 0.1, xDir, yDir);
+            }
         }
 
         this.enemies = sortEnemies(this.beatRate, this.enemies);

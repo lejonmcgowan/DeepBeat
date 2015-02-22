@@ -63,8 +63,9 @@ DeepBeat = {
         // Preload the following assets
         var assetsPath = "../assets/";
         this.manifest = [
-            {id: "music", src: "audio/Phazd_tobycreed.mp3"},
-            {id: "gun", src: "images/switchoff.png"}
+            {id: "level1Music", src: "audio/Phazd_tobycreed.mp3"},
+            {id: "gun", src: "images/gun.png"},
+            {id: "blackhole", src: "images/blackhole.png"}
         ];
         
         this.preload = new createjs.LoadQueue(true, assetsPath);
