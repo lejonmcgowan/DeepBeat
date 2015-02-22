@@ -38,6 +38,7 @@
         });
     };
 
+    /*
     var addDiagonal = function(enemies, beatStart, number, beatIncrement, speed, xDir, yDir, startX, startY, endX, endY) {
         for(var i = 0; i < number; i++) {
             enemies.push({
@@ -47,11 +48,26 @@
             });
         }
     };
+    */
+    
+    var addEnemy = function(enemies, beat, speed, xDir, yDir) {
+        enemies.push({
+            beat: beat,
+            type: Enemy,
+            params: [
+                xDir == 0 ? 1024/2 : (xDir == 1 ? 0 : 1024), //startX
+                yDir == 0 ? 608/2 : (yDir == 1 ? 0 : 608),  //startY
+                xDir, yDir, speed]
+        });
+    };
     
     // Converts the BPM to a beat rate (milliseconds between each beat)
     var bpmToBeatRate = function(bpm) {
-        // TODO calc beatRate (milliseconds between beats)
         return (1 / bpm) * 60 * 1000;
+    }
+    
+    var randBool = function() {
+        return Math.random()<.5;
     }
 
     window.DeepBeatLevels = {};
@@ -62,16 +78,14 @@
         stage.addChild(new Gun());
         this.music = createjs.Sound.play("music");
         this.enemies = [];
-        /*
-        addDiagonal(this.enemies, 15, 5, 1, 0.1, -1, 0, 1024, 50, 1024, 250);
-        addDiagonal(this.enemies, 20, 5, 1, 0.2, 1, 0, 0, 50, 0, 250);
-        addDiagonal(this.enemies, 25, 5, 1, 0.3, 0, -1, 750, 608, 250, 608);
-        addDiagonal(this.enemies, 30, 5, 1, 0.07, 0, 1, 250, 0, 750, 0);
-        */
-        // Basic generation to test callibration
-        for (var i = 1; i < 60; i++) {
-            addDiagonal(this.enemies, i * 8, 4, 1, 0.1, -1, 0, 1024, 50, 1024, 250);
+
+        // Randomly add enemies coming from top, left, bottom, and right
+        for (var i = 1; i < 50; i++) {
+            var xDir = Math.floor(Math.random()*3) - 1;
+            var yDir = xDir == 0 ? Math.floor(Math.random()*3) - 1 : 0;
+            addEnemy(this.enemies, i, 0.1, xDir, yDir);
         }
+
         this.enemies = sortEnemies(this.beatRate, this.enemies);
     };
 
