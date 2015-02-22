@@ -1,12 +1,19 @@
 (function (window) {
 
-    function Enemy() {
+
+    function Enemy(params) {
         this.Container_constructor();
 
         this.addChild(new createjs.Bitmap(DeepBeat.preload.getResult("gun")));
         this.on("tick", p.tick);
-        this.x = 1024;
-        this.y = Math.random() * 600;
+        this.xReg = 16;
+        this.yReg = 16;
+        this.x = params[0] - 16;
+        this.y = params[1] - 16;
+        this.xDir = params[2];
+        this.yDir = params[3];
+        this.speed = params[4];
+
 
         DeepBeat.addCollisionType(this, "Enemy");
     }
@@ -14,11 +21,12 @@
     window.Enemy = createjs.promote(Enemy, "Container")
 
     p.tick = function (event) {
-        this.x -= 0.1 * DeepBeat.dt;
+        this.x += this.xDir * this.speed * DeepBeat.dt;
+        this.y += this.yDir * this.speed * DeepBeat.dt;
     }
 
-    p.timeToSound = function() {
-        return (1024/2.0) / 0.1;
+    p.timeToSound = function(params) {
+        return ((params[3] != 0 ? 608 : 1024)/2.0) / params[4]; // pick width or height depending on direction.
     };
     
 }(window));

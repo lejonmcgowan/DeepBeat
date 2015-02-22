@@ -32,8 +32,8 @@
         this.bitmap = new createjs.Bitmap(DeepBeat.preload.getResult("gun"));
         this.addChild(this.bitmap);
         this.on("tick", p.tick);
-        this.x = 500;
-        this.y = 288;
+        this.x = 1024/2;
+        this.y = 608/2;
         this.direction = null;
 
         DeepBeat.addKeyHandler(this, "key-up", function() {
@@ -71,7 +71,7 @@
             createjs.Sound.setMute(!createjs.Sound.getMute());
         });
         
-        DeepBeat.addCollisionHandler(this, this.collisionBitmap, "Enemy", function() {
+        DeepBeat.addCollisionHandler(this, this.collisionBitmap, "Enemy", function(other) {
             if(this.laserTimer > 0) {
                 console.log("hi");
             }
