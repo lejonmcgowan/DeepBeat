@@ -81,7 +81,7 @@
         this.enemies = [];
 
         // Randomly add enemies in groups of 4 coming from top, left, bottom, and right
-        for (var i = 1; i < 50; i+=4) {
+        for (var i = 1; i < 200; i+=4) {
             var xDir = Math.floor(Math.random()*3) - 1;
             var yDir = xDir == 0 ? Math.floor(Math.random()*3) - 1 : 0;
             for (var j = 1; j < 5; j++) {
