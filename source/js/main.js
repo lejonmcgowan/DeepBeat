@@ -11,6 +11,9 @@ DeepBeat = {
     currentLevel: null,
     firstLevel: null,
 
+    windowWidth: 1024,
+    windowHeight: 608,
+
     collisionTypes: {
         "Enemy": []
     },
