@@ -26,7 +26,7 @@
     }
 
     p.timeToSound = function(params) {
-        return ((params[3] != 0 ? 608 : 1024)/2.0) / params[4]; // pick width or height depending on direction.
+        return ((params[3] != 0 ? DeepBeat.windowHeight : DeepBeat.windowWidth)/2.0) / params[4]; // pick width or height depending on direction.
     };
     
 }(window));
