@@ -10,8 +10,8 @@
         this.bitmap = new createjs.Bitmap(DeepBeat.preload.getResult("blackhole"));
         this.addChild(this.bitmap);
         this.on("tick", p.tick);
-        this.x = 1024/2;
-        this.y = 608/2;
+        this.x = DeepBeat.windowWidth/2;
+        this.y = DeepBeat.windowHeight/2;
         this.direction = null;
 
         DeepBeat.addCollisionHandler(this, this.bitmap, "Enemy", function(other) {
@@ -23,7 +23,6 @@
     window.Blackhole = createjs.promote(Blackhole, "Container")
 
     p.tick = function (event) {
-        // TODO Rotate image
         this.rotation++;
     }
 }(window));

@@ -55,8 +55,8 @@
             beat: beat,
             type: Enemy,
             params: [
-                xDir == 0 ? 1024/2 : (xDir == 1 ? 0 : 1024), //startX
-                yDir == 0 ? 608/2 : (yDir == 1 ? 0 : 608),  //startY
+                xDir == 0 ? DeepBeat.windowWidth/2 : (xDir == 1 ? 0 : DeepBeat.windowWidth), //startX
+                yDir == 0 ? DeepBeat.windowHeight/2 : (yDir == 1 ? 0 : DeepBeat.windowHeight),  //startY
                 xDir, yDir, speed]
         });
     };
