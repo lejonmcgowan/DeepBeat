@@ -26,9 +26,12 @@
         this.laserTimer = 0;
 
         this.currentDirection = null;
-        this.currentAim = null;
-        this.currentLaser = null;
-        this.currentCollision = null;
+        this.currentAim = new createjs.Container();
+        this.currentLaser = new createjs.Container();
+        this.currentCollision = new createjs.Container();
+        this.addChild(this.currentAim);
+        this.addChild(this.currentLaser);
+        this.addChild(this.currentCollision);
         
         this.x = 0;
         this.y = 0;
@@ -49,6 +52,18 @@
             this.updateAim("left");
             this.updateLaser();
         });
+        DeepBeat.addKeyHandler(this, "key-up", function() {
+            this.updateAim("up");
+        });
+        DeepBeat.addKeyHandler(this, "key-right", function() {
+            this.updateAim("right");
+        });
+        DeepBeat.addKeyHandler(this, "key-down", function() {
+            this.updateAim("down");
+        });
+        DeepBeat.addKeyHandler(this, "key-left", function() {
+            this.updateAim("left");
+        });
         DeepBeat.addKeyHandler(this, "keyup-up", function() {
             this.updateAim(null);
         });
@@ -68,6 +83,11 @@
             // Toggle muting all audio
             createjs.Sound.setMute(!createjs.Sound.getMute());
         });
+
+
+        DeepBeat.addCollisionHandler(this, this.currentCollision, "Enemy", function(other) {
+            DeepBeat.removeObject(other);
+        });
     }
     var p = createjs.extend(Gun, createjs.Container);
     window.Gun = createjs.promote(Gun, "Container")
@@ -75,47 +95,41 @@
     p.tick = function (event) {
         if(this.laserTimer > 0) {
             this.laserTimer -= DeepBeat.dt;
-        }
-        if(this.laserTimer <= 0 && this.currentLaser) {
-            this.removeChild(this.currentLaser);
-            this.removeChild(this.currentCollision);
-            this.currentLaser = null;
-            this.currentCollision = null;
+            if(this.laserTimer <= 0) {
+                this.currentLaser.removeAllChildren();
+                this.currentCollision.removeAllChildren();
+            }
         }
     }
 
     p.updateAim = function(direction) {
-        if(this.currentLaser) {
+        if(this.currentDirection == direction) {
             return;
         }
         if(this.currentDirection != null) {
-            this.removeChild(this.currentAim);
+            this.currentAim.removeAllChildren();
             this.currentDirection = null;
         }            
         if(direction != null) {
             var laserLine = this.laserNodes[this.laserNode.x][this.laserNode.y][direction];
             if(laserLine) {
-                this.currentAim = laserLine.aim;
-                this.addChild(this.currentAim);
+                this.currentAim.addChild(laserLine.aim);
                 this.currentDirection = direction;
             }
         }
     };
 
     p.updateLaser = function() {
-        if(!this.currentLaser) {
-            this.laserNodes[this.laserNode.x][this.laserNode.y].bitmap.alpha = 0.5;
-            this.currentLaser = this.laserNodes[this.laserNode.x][this.laserNode.y][this.currentDirection].laser;
-            this.currentCollision = this.laserNodes[this.laserNode.x][this.laserNode.y][this.currentDirection].collision;
-            this.addChild(this.currentLaser);
-            this.addChild(this.currentCollision);
+        if(this.laserTimer <= 0 && this.laserNodes[this.laserNode.x][this.laserNode.y][this.currentDirection]) {
+            this.currentLaser.addChild(this.laserNodes[this.laserNode.x][this.laserNode.y][this.currentDirection].laser);
+            this.currentCollision.addChild(this.laserNodes[this.laserNode.x][this.laserNode.y][this.currentDirection].collision);
             this.laserTimer = 300;
         }
     };
 
     p.updatePosition = function() {
         if(this.currentDirection) {
-            this.removeChild(this.currentAim);
+            this.currentAim.removeAllChildren();
             this.laserNodes[this.laserNode.x][this.laserNode.y].bitmap.alpha = 0.5;
             if(this.currentDirection == "right")
                 this.laserNode.x++;
@@ -180,18 +194,21 @@
         laser.regX = 16;
         laser.regY = 16;
 
-        var laserCollisionImage = new Image(width, height);
-        laserCollisionBitmap = new createjs.Bitmap(laserCollisionImage);
-        laserCollisionBitmap.regX = 16;
-        laserCollisionBitmap.regY = 16;
-        laserCollisionBitmap.x = startX + 16;
-        laserCollisionBitmap.y = startY + 16;
-
-        DeepBeat.addCollisionHandler(this, laserCollisionBitmap, "Enemy", function(other) {
-            if(this.currentLaser == laser) {
-                DeepBeat.removeObject(other);
-            }
-        });
+        if(width < 64) {
+            var laserCollisionImage = new Image(1, height);
+            laserCollisionBitmap = new createjs.Bitmap(laserCollisionImage);
+            laserCollisionBitmap.regX = 0;
+            laserCollisionBitmap.regY = 16;
+            laserCollisionBitmap.x = startX + 16;
+            laserCollisionBitmap.y = startY + 16;
+        } else {
+            var laserCollisionImage = new Image(width, 1);
+            laserCollisionBitmap = new createjs.Bitmap(laserCollisionImage);
+            laserCollisionBitmap.regX = 16;
+            laserCollisionBitmap.regY = 0;
+            laserCollisionBitmap.x = startX + 16;
+            laserCollisionBitmap.y = startY + 16;
+        }
 
         return {
             aim: laserAim,
