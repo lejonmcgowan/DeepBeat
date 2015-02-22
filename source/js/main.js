@@ -149,7 +149,7 @@ DeepBeat = {
             game.collisionTypes[typeString].push(obj);
         });
         obj.on("removed", function() {
-            game.collisionTypes[typeString].splice(game.collisions[typeString].indexOf(obj), 1);
+            game.collisionTypes[typeString].splice(game.collisionTypes[typeString].indexOf(obj), 1);
         });
     },
 
@@ -175,10 +175,14 @@ DeepBeat = {
         for(var i in this.collisionFroms) {
             for(var j in this.collisionTypes[this.collisionFroms[i].to]) {
                 if(ndgmr.checkRectCollision(this.collisionFroms[i].from, this.collisionTypes[this.collisionFroms[i].to][j])) {
-                    this.collisionFroms[i].func.apply(this.collisionFroms[i].obj);
+                    this.collisionFroms[i].func.apply(this.collisionFroms[i].obj, [this.collisionTypes[this.collisionFroms[i].to][j]]);
                 }
             }
         }
+    },
+
+    removeObject: function(obj) {
+        this.stage.removeChild(obj);
     }
 };
 
