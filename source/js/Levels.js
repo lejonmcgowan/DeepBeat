@@ -22,6 +22,7 @@
         stage: null,
         enemies: [],
         music: null,
+        beatRate: 1000,
 
         tick: function() {},
 
@@ -46,25 +47,36 @@
             });
         }
     };
-
-
+    
+    // Converts the BPM to a beat rate (milliseconds between each beat)
+    var bpmToBeatRate = function(bpm) {
+        // TODO calc beatRate (milliseconds between beats)
+        return (1 / bpm) * 60 * 1000;
+    }
 
     window.DeepBeatLevels = {};
 
+    // Define first level
     window.DeepBeatLevels.Level1 = function(stage) {
         Level.apply(this, [stage]);
         stage.addChild(new Gun());
         this.music = createjs.Sound.play("music");
         this.enemies = [];
+        /*
         addDiagonal(this.enemies, 15, 5, 1, 0.1, -1, 0, 1024, 50, 1024, 250);
         addDiagonal(this.enemies, 20, 5, 1, 0.2, 1, 0, 0, 50, 0, 250);
         addDiagonal(this.enemies, 25, 5, 1, 0.3, 0, -1, 750, 608, 250, 608);
         addDiagonal(this.enemies, 30, 5, 1, 0.07, 0, 1, 250, 0, 750, 0);
+        */
+        // Basic generation to test callibration
+        for (var i = 1; i < 60; i++) {
+            addDiagonal(this.enemies, i * 8, 4, 1, 0.1, -1, 0, 1024, 50, 1024, 250);
+        }
         this.enemies = sortEnemies(this.beatRate, this.enemies);
     };
 
     window.DeepBeatLevels.Level1.prototype = _.extend(new Level(), {
-        beatRate: 400,
+        beatRate: bpmToBeatRate(82.49), // define the BPM of the song here
 
         tick: function() {
             this.spawnEnemies();
