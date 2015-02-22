@@ -72,7 +72,7 @@
         });
         
         DeepBeat.addCollisionHandler(this, this.collisionBitmap, "Enemy", function(other) {
-            if(this.laserTimer > 0) {
+            if (this.laserTimer > 0) {
                 DeepBeat.removeObject(other);
             }
         });
