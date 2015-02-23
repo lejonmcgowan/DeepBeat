@@ -78,7 +78,6 @@
     }
     
     // Psuedo-randomly produce a level with enemies
-    // TODO increase difficulty with time
     var level1Design = function(enemies) {
         var xDir = 1;
         var yDir = 0;
