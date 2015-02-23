@@ -50,9 +50,9 @@
     };
     */
     
-    var addEnemy = function(enemies, beat, speed, xDir, yDir) {
+    var addEnemy = function(enemies, phrase, measure, beat, speed, xDir, yDir) {
         enemies.push({
-            beat: beat,
+            beat: phrase*(4*8) + measure*4 + beat,
             type: Enemy,
             params: [
                 xDir == 0 ? DeepBeat.windowWidth/2 : (xDir == 1 ? 0 : DeepBeat.windowWidth), //startX
@@ -61,6 +61,13 @@
         });
     };
     
+    var addEnemyGroup = function(enemies, phraseStart, measureStart, beatStart, number, beatIncr, speed, xDir, yDir) {
+        for (var i = 0; i < number; i++) {
+            var beat = (phraseStart*(4*8) + measureStart*4 + beatStart) + i*beatIncr;
+            addEnemy(enemies, 0, 0, beat, speed, xDir, yDir);
+        }
+    }
+    
     // Converts the BPM to a beat rate (milliseconds between each beat)
     var bpmToBeatRate = function(bpm) {
         return (1 / bpm) * 60 * 1000;
@@ -68,6 +75,23 @@
     
     var randBool = function() {
         return Math.random()<.5;
+    }
+    
+    // Psuedo-randomly produce a level with enemies
+    // TODO increase difficulty with time
+    var level1Design = function(enemies) {
+        var xDir = 1;
+        var yDir = 0;
+        
+        for (var phrase = 0; phrase < 16; phrase++) {
+            var number = Math.pow(2, Math.floor(phrase/2) + 2);
+            var speed = (phrase/4 * 0.05) + 0.1;
+            
+            addEnemyGroup(enemies, phrase, 0, 0, number, 32/number, speed, xDir, yDir);   
+            
+            xDir = xDir == 0 ? (randBool() ? -1 : 1) : 0;
+            yDir = yDir == 0 ? (randBool() ? -1 : 1) : 0;
+        }
     }
 
     window.DeepBeatLevels = {};
@@ -79,22 +103,16 @@
         stage.addChild(new Blackhole());
         this.music = createjs.Sound.play("level1Music");
         this.enemies = [];
-
-        // Randomly add enemies in groups of 4 coming from top, left, bottom, and right
-        for (var i = 1; i < 200; i+=4) {
-            var xDir = Math.floor(Math.random()*3) - 1;
-            var yDir = xDir == 0 ? Math.floor(Math.random()*3) - 1 : 0;
-            for (var j = 1; j < 5; j++) {
-                addEnemy(this.enemies, i+j, 0.1, xDir, yDir);
-            }
-        }
+        
+        // Level enemy design (https://docs.google.com/spreadsheets/d/1A6TbD9uX-BzYY3LA29Rkb5xUfGDKnTwhemWctucYRRk/edit#gid=1841141855)
+        level1Design(this.enemies);
 
         this.enemies = sortEnemies(this.beatRate, this.enemies);
     };
 
     window.DeepBeatLevels.Level1.prototype = _.extend(new Level(), {
-        beatRate: bpmToBeatRate(82.49), // define the BPM of the song here
-
+        beatRate: bpmToBeatRate(165), // define the BPM of the song here
+        
         tick: function() {
             this.spawnEnemies();
         }

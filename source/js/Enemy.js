@@ -26,9 +26,8 @@
     }
 
     p.timeToSound = function(params) {
-        return (params[2] == 0
-            ? (params[3] > 0 ? DeepBeat.windowHeight/3 : 2*DeepBeat.windowHeight/3)
-            : (params[2] > 0 ? DeepBeat.windowWidth/3 : 2*DeepBeat.windowWidth/3)) / params[4];
+        //return params[2] == 0 ? DeepBeat.windowHeight/2 : DeepBeat.windowWidth/2;
+        return (params[2] == 0 ? DeepBeat.windowHeight/3 : DeepBeat.windowWidth/3) / params[4];
     };
     
 }(window));
