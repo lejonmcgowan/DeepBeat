@@ -25,4 +25,27 @@
     p.tick = function (event) {
         this.rotation++;
     }
+
+    window.BlackholeDistortX = function(x, y) {
+        var ny = y - DeepBeat.windowHeight / 2;
+        var nx = x - DeepBeat.windowWidth / 2;
+        var dx = nx / (DeepBeat.windowWidth / 6);
+        var dy = ny / (DeepBeat.windowHeight / 6);
+        var d = dx * dx + dy * dy;
+        if(d > 1)
+            return x;
+        return DeepBeat.windowWidth/2+nx*d;
+    }
+
+    window.BlackholeDistortY = function(x, y) {
+        var ny = y - DeepBeat.windowHeight / 2;
+        var nx = x - DeepBeat.windowWidth / 2;
+        var dx = nx / (DeepBeat.windowWidth / 6);
+        var dy = ny / (DeepBeat.windowHeight / 6);
+        var d = dx * dx + dy * dy;
+        if(d > 1)
+            return y;
+        return DeepBeat.windowHeight/2+ny*d;
+    }
+
 }(window));
