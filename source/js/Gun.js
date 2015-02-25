@@ -5,6 +5,8 @@
 
         this.on("tick", this.tick);
 
+        this.health = 10;
+
         this.x = 0;
         this.y = 0;
 
@@ -128,20 +130,18 @@
     };
 
     p.updatePosition = function() {
-        if(this.currentDirection) {
-            this.currentAim.removeAllChildren();
-            this.laserNodes[this.laserNode.x][this.laserNode.y].bitmap.alpha = 0.5;
-            if(this.currentDirection == "right")
-                this.laserNode.x++;
-            if(this.currentDirection == "left")
-                this.laserNode.x--;
-            if(this.currentDirection == "down")
-                this.laserNode.y++;
-            if(this.currentDirection == "up")
-                this.laserNode.y--;
-            this.laserNodes[this.laserNode.x][this.laserNode.y].bitmap.alpha = 1.0;
-            this.currentDirection = null;
-        }
+        this.currentAim.removeAllChildren();
+        this.laserNodes[this.laserNode.x][this.laserNode.y].bitmap.alpha = 0.5;
+        if(this.laserNode.x == 0 && this.laserNode.y == 0)
+            this.laserNode.x = 1;
+        else if(this.laserNode.x == 1 && this.laserNode.y == 0)
+            this.laserNode.y = 1;
+        else if(this.laserNode.x == 1 && this.laserNode.y == 1)
+            this.laserNode.x = 0;
+        else if(this.laserNode.x == 0 && this.laserNode.y == 1)
+            this.laserNode.y = 0;
+        this.laserNodes[this.laserNode.x][this.laserNode.y].bitmap.alpha = 1.0;
+        this.currentDirection = null;
     };
 
     p.constructLaserNode = function(x, y) {
