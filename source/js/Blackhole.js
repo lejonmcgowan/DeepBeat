@@ -26,6 +26,7 @@
         DeepBeat.addCollisionHandler(this, this.collision, "Enemy", function(other) {
             // TODO add fancy visual effects
             DeepBeat.removeObject(other);
+            DeepBeat.currentLevel.health.decrementHealth(10);
         });
     }
     var p = createjs.extend(Blackhole, createjs.Container);

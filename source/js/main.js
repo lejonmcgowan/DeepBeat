@@ -100,7 +100,7 @@ DeepBeat = {
     setLevel: function(level) {
         createjs.Sound.stop();
         if(this.currentLevel) {
-            level.end();
+            this.currentLevel.end();
         }
         this.stage.removeAllChildren();
         this.currentLevel = new level(this.stage);

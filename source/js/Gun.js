@@ -5,8 +5,6 @@
 
         this.on("tick", this.tick);
 
-        this.health = 10;
-
         this.x = 0;
         this.y = 0;
 

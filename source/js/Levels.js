@@ -26,7 +26,9 @@
 
         tick: function() {},
 
-        end: function() {}
+        end: function() {},
+
+        lostLevel: function() {}
     };
 
 
@@ -100,6 +102,8 @@
         Level.apply(this, [stage]);
         stage.addChild(new Gun());
         stage.addChild(new Blackhole());
+        this.health = new HealthBar();
+        stage.addChild(this.health);
         this.music = createjs.Sound.play("level1Music");
         this.enemies = [];
         
@@ -114,6 +118,10 @@
         
         tick: function() {
             this.spawnEnemies();
+        },
+
+        lostLevel: function() {
+            DeepBeat.setLevel(DeepBeatLevels.Level1);
         }
     });
 
