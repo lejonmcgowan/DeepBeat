@@ -97,6 +97,18 @@
 
     window.DeepBeatLevels = {};
 
+    window.DeepBeatLevels.MainMenu = function(stage) {
+        Level.apply(this, [stage]);
+        stage.addChild(new Menu([{
+            text: "Play Game",
+            level: window.DeepBeatLevels.Level1
+        }, {
+            text: "Help",
+            level: window.DeepBeatLevels.Level1
+        }]))
+    };
+    window.DeepBeatLevels.MainMenu.prototype = _.extend(new Level(), {});
+
     // Define first level
     window.DeepBeatLevels.Level1 = function(stage) {
         Level.apply(this, [stage]);
@@ -121,7 +133,7 @@
         },
 
         lostLevel: function() {
-            DeepBeat.setLevel(DeepBeatLevels.Level1);
+            DeepBeat.setLevel(DeepBeatLevels.MainMenu);
         }
     });
 
