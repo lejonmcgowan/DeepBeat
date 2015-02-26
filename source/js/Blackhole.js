@@ -3,9 +3,6 @@
     function Blackhole() {
         this.Container_constructor();
 
-        // Point of rotation (center of image)
-        
-
         this.collision = new createjs.Bitmap(new Image(5,5));
         this.collision.x = 0;
         this.collision.y = 0;

@@ -27,6 +27,9 @@
         DeepBeat.addKeyHandler(this, "keydown-space", function() {
             DeepBeat.setLevel(this.menuItems[this.currentItem].level);
         });
+        DeepBeat.addKeyHandler(this, "keydown-enter", function() {
+            DeepBeat.setLevel(this.menuItems[this.currentItem].level);
+        });
     }
 
     var p = createjs.extend(Menu, createjs.Container);
