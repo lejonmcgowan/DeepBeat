@@ -18,7 +18,7 @@
         this.xDir = params[2];
         this.yDir = params[3];
         this.speed = params[4];
-
+        this.type = params[5];
 
         DeepBeat.addCollisionType(this, "Enemy");
     }
@@ -26,8 +26,20 @@
     window.Enemy = createjs.promote(Enemy, "Container");
 
     p.tick = function (event) {
-        this.xPos += this.xDir * this.speed * DeepBeat.dt;
-        this.yPos += this.yDir * this.speed * DeepBeat.dt;
+        if (this.type == DeepBeat.enemyType.linear) {
+            this.xPos += this.xDir * this.speed * DeepBeat.dt;
+            this.yPos += this.yDir * this.speed * DeepBeat.dt;
+        } else if (this.type == DeepBeat.enemyType.wave) {
+            if (this.xDir == 0) {
+                this.xPos = DeepBeat.windowWidth/2 + 50 * Math.cos(this.speed/3 * this.yPos);
+                this.yPos += this.yDir * this.speed * DeepBeat.dt;
+            }
+            if (this.yDir == 0) {
+                this.xPos += this.xDir * this.speed * DeepBeat.dt;
+                this.yPos = DeepBeat.windowHeight/2 + 50 * Math.cos(this.speed/3 * this.xPos);
+            }
+        }
+        
         this.x = BlackholeDistortX(this.xPos, this.yPos);
         this.y = BlackholeDistortY(this.xPos, this.yPos);
         this.shape.graphics.clear();

@@ -52,21 +52,22 @@
     };
     */
     
-    var addEnemy = function(enemies, phrase, measure, beat, speed, xDir, yDir) {
+    var addEnemy = function(enemies, phrase, measure, beat, speed, xDir, yDir, type) {
         enemies.push({
             beat: phrase*(4*8) + measure*4 + beat,
             type: Enemy,
             params: [
                 xDir == 0 ? DeepBeat.windowWidth/2 : (xDir == 1 ? 0 : DeepBeat.windowWidth), //startX
                 yDir == 0 ? DeepBeat.windowHeight/2 : (yDir == 1 ? 0 : DeepBeat.windowHeight),  //startY
-                xDir, yDir, speed]
+                xDir, yDir, speed,
+                type]
         });
     };
     
-    var addEnemyGroup = function(enemies, phraseStart, measureStart, beatStart, number, beatIncr, speed, xDir, yDir) {
+    var addEnemyGroup = function(enemies, phraseStart, measureStart, beatStart, number, beatIncr, speed, xDir, yDir, type) {
         for (var i = 0; i < number; i++) {
             var beat = (phraseStart*(4*8) + measureStart*4 + beatStart) + i*beatIncr;
-            addEnemy(enemies, 0, 0, beat, speed, xDir, yDir);
+            addEnemy(enemies, 0, 0, beat, speed, xDir, yDir, type);
         }
     }
     
@@ -84,11 +85,12 @@
         var xDir = 1;
         var yDir = 0;
         
-        for (var phrase = 0; phrase < 16; phrase++) {
-            var number = Math.pow(2, Math.floor(phrase/2) + 2);
-            var speed = (phrase/4 * 0.05) + 0.1;
+        for (var phrase = 1; phrase < 16; phrase++) {
+            var number = Math.pow(2, Math.floor(Math.min(Math.log(phrase*2),3))+2);
+            var speed = Math.log(phrase)*0.05 + 0.1;
+            var type = randBool() ? DeepBeat.enemyType.linear : DeepBeat.enemyType.wave;
             
-            addEnemyGroup(enemies, phrase, 0, 0, number, 32/number, speed, xDir, yDir);   
+            addEnemyGroup(enemies, phrase, 0, 0, number, 32/number, speed, xDir, yDir, type);   
             
             xDir = xDir == 0 ? (randBool() ? -1 : 1) : 0;
             yDir = yDir == 0 ? (randBool() ? -1 : 1) : 0;

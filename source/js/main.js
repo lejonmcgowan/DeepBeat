@@ -17,6 +17,11 @@ DeepBeat = {
     collisionTypes: {
         "Enemy": []
     },
+    
+    enemyType: { // How to enum: http://stackoverflow.com/questions/287903/enums-in-javascript
+        linear: 0,
+        wave: 1
+    },
 
     collisionFroms: [],
 
