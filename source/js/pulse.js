@@ -2,7 +2,8 @@ var analyserNode; //node to get analysis data from
 
 var freqFloatData, freqByteData, timeByteData; // different bufffers for analyzer
 
-var circle;
+var circle1, circle2;
+var radius = 25;
 
 var FFTSIZE = 64;
 window.addEventListener("load", initAnalyser, false);
@@ -27,7 +28,8 @@ function initAnalyser()
 	timeByteData = new Uint8Array(analyserNode.frequencyBinCount);
 
 	//make a test circle
-	circle = new createjs.Shape();
+	circle1 = new createjs.Shape();
+	circle2 = new createjs.Shape();
 }
 
 function addPulseCircle(container)
@@ -36,17 +38,30 @@ function addPulseCircle(container)
 	analyserNode.getByteFrequencyData(freqByteData);  // this gives us the frequency
 	analyserNode.getByteTimeDomainData(timeByteData); 
 	
-	circle.graphics.clear();
+	circle1.graphics.clear();
+	circle2.graphics.clear();
 
-	circle.compositeOperation = "lighter";
+	circle1.compositeOperation = "lighter";
+	circle2.compositeOperation = "lighter";
 	var red = parseInt(-freqFloatData[10]) * 2;
 	var blue = parseInt(-freqFloatData[20]) * 2;
 	var green = parseInt(-freqFloatData[30]) * 2;
 	var opacity = 0.5;
 	var color = 'rgba(' + red + ',' + blue + ',' + green + ',' + opacity + ')';
-	console.log(color);
-	circle.graphics.beginFill(color).drawCircle(0, 0, 25);
+	//console.log(color);
+	circle1.graphics.beginFill(color).drawCircle(0, 0, radius);
+	circle1.scaleX = (blue - radius) / radius;
+	//console.log(blue - radius);
+	//console.log(circle1.scaleX)
 
-	container.addChild(circle);
+	circle2.graphics.beginFill(color).drawCircle(0, 0, radius);
+	circle2.scaleX = (blue - radius) / radius;
+	circle2.rotation = circle1.rotation + 90;
+
+	//console.log(blue - radius);
+	//console.log(circle1.scaleX)
+
+	container.addChild(circle1);
+	container.addChild(circle2);
 
 }
