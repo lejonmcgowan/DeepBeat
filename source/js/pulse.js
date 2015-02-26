@@ -28,15 +28,24 @@ function initAnalyser()
 
 	//make a test circle
 	circle = new createjs.Shape();
-	circle.compositeOperation = "lighter";
-	circle.graphics.beginFill("rgba(255,0,0,0.5)").drawCircle(0, 0, 25);
 }
 
 function addPulseCircle(container)
 {
-	//analyserNode.getFloatFrequencyData(freqFloatData);  // this gives us the dBs
-	//analyserNode.getByteFrequencyData(freqByteData);  // this gives us the frequency
-	//analyserNode.getByteTimeDomainData(timeByteData); 
+	analyserNode.getFloatFrequencyData(freqFloatData);  // this gives us the dBs
+	analyserNode.getByteFrequencyData(freqByteData);  // this gives us the frequency
+	analyserNode.getByteTimeDomainData(timeByteData); 
+	
+	circle.graphics.clear();
+
+	circle.compositeOperation = "lighter";
+	var red = parseInt(-freqFloatData[10]) * 2;
+	var blue = parseInt(-freqFloatData[20]) * 2;
+	var green = parseInt(-freqFloatData[30]) * 2;
+	var opacity = 0.5;
+	var color = 'rgba(' + red + ',' + blue + ',' + green + ',' + opacity + ')';
+	console.log(color);
+	circle.graphics.beginFill(color).drawCircle(0, 0, 25);
 
 	container.addChild(circle);
 

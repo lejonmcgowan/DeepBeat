@@ -26,13 +26,13 @@
             DeepBeat.currentLevel.health.decrementHealth(10);
         });
 
-        addPulseCircle(this);
     }
     var p = createjs.extend(Blackhole, createjs.Container);
     window.Blackhole = createjs.promote(Blackhole, "Container")
 
     p.tick = function (event) {
         this.rotation++;
+        addPulseCircle(this);
     }
 
     window.BlackholeDistortX = function(x, y) {
