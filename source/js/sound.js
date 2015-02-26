@@ -2,7 +2,7 @@
 // global constants
 var FFTSIZE = 32;      // number of samples for the analyser node FFT, min 32
 var TICK_FREQ = 20;     // how often to run the tick function, in milliseconds
-var CIRCLES = 8;        // the number of circles to draw.  This is also the amount to break the files into, so FFTSIZE/2 needs to divide by this evenly
+var CIRCLES = 3;        // the number of circles to draw.  This is also the amount to break the files into, so FFTSIZE/2 needs to divide by this evenly
 var RADIUS_FACTOR = 40; // the radius of the circles, factored for which ring we are drawing
 var MIN_RADIUS = 1;     // the minimum radius of each circle
 var HUE_VARIANCE = 120;  // amount hue can vary by
@@ -17,7 +17,7 @@ var h, w;               // variables to store the width and height of the canvas
 var centerX, centerY;   // variables to hold the center point, so that tick is quicker
 var messageField;       // Message display field
 var assetsPath = "../assets/audio/";   // Create a single item to load.
-var src = assetsPath + "pika.mp3";  // set up our source
+var src = assetsPath + "impossible.mp3";  // set up our source
 var soundInstance;      // the sound instance we create
 var analyserNode;       // the analyser node that allows us to visualize the audio
 var freqFloatData, freqByteData, timeByteData;  // arrays to retrieve data from analyserNode
@@ -110,10 +110,10 @@ function startPlayback(evt) {
 	soundInstance = createjs.Sound.play(src, {loop: -1});
 
 	// testing function that allows a quick stop
-	/*stage.addEventListener("stagemousedown", function(){
+	stage.addEventListener("stagemousedown", function(){
 	 createjs.Ticker.removeEventListener("tick", tick);
 	 createjs.Sound.stop();
-	 });*/
+	 });
 
 	// create circles so they are persistent
 	for (var i = 0; i < CIRCLES; i++) {

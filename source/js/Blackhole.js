@@ -25,6 +25,8 @@
             DeepBeat.removeObject(other);
             DeepBeat.currentLevel.health.decrementHealth(10);
         });
+
+        addPulseCircle(this);
     }
     var p = createjs.extend(Blackhole, createjs.Container);
     window.Blackhole = createjs.promote(Blackhole, "Container")
