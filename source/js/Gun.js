@@ -24,15 +24,11 @@
 
         this.constructLaserLines(this.laserNodes);
 
-        this.laserNode = {x: 0, y: 0};
-        this.laserNodes[this.laserNode.x][this.laserNode.y].bitmap.alpha = 1.0;
         this.laserTimer = 0;
 
-        this.currentDirection = null;
-        //this.currentAim = new createjs.Container();
         this.currentLaser = new createjs.Container();
         this.currentCollision = new createjs.Container();
-        //this.addChild(this.currentAim);
+
         this.addChild(this.currentLaser);
         this.addChild(this.currentCollision);
         
@@ -40,53 +36,22 @@
         this.y = 0;
 
         DeepBeat.addKeyHandler(this, "keydown-up", function() {
-            this.updateAim("up");
-            this.updateLaser();
+            this.updateLaser(this.laserNodes[0][0].right);
         });
         DeepBeat.addKeyHandler(this, "keydown-right", function() {
-            this.updateAim("right");
-            this.updateLaser();
+            this.updateLaser(this.laserNodes[1][0].down);
         });
         DeepBeat.addKeyHandler(this, "keydown-down", function() {
-            this.updateAim("down");
-            this.updateLaser();
+            this.updateLaser(this.laserNodes[0][1].right);
         });
         DeepBeat.addKeyHandler(this, "keydown-left", function() {
-            this.updateAim("left");
-            this.updateLaser();
+            this.updateLaser(this.laserNodes[0][0].down);
         });
-        DeepBeat.addKeyHandler(this, "key-up", function() {
-            this.updateAim("up");
-        });
-        DeepBeat.addKeyHandler(this, "key-right", function() {
-            this.updateAim("right");
-        });
-        DeepBeat.addKeyHandler(this, "key-down", function() {
-            this.updateAim("down");
-        });
-        DeepBeat.addKeyHandler(this, "key-left", function() {
-            this.updateAim("left");
-        });
-        DeepBeat.addKeyHandler(this, "keyup-up", function() {
-            this.updateAim(null);
-        });
-        DeepBeat.addKeyHandler(this, "keyup-right", function() {
-            this.updateAim(null);
-        });
-        DeepBeat.addKeyHandler(this, "keyup-down", function() {
-            this.updateAim(null);
-        });
-        DeepBeat.addKeyHandler(this, "keyup-left", function() {
-            this.updateAim(null);
-        });
-        DeepBeat.addKeyHandler(this, "keydown-space", function() {
-            this.updatePosition();
-        });
+
         DeepBeat.addKeyHandler(this, "keydown-mute", function() {
             // Toggle muting all audio
             createjs.Sound.setMute(!createjs.Sound.getMute());
         });
-
 
         DeepBeat.addCollisionHandler(this, this.currentCollision, "Enemy", function(other) {
             DeepBeat.removeObject(other);
@@ -105,44 +70,12 @@
         }
     }
 
-    p.updateAim = function(direction) {
-        if(this.currentDirection == direction) {
-            return;
-        }
-        if(this.currentDirection != null) {
-            //this.currentAim.removeAllChildren();
-            this.currentDirection = null;
-        }            
-        if(direction != null) {
-            var laserLine = this.laserNodes[this.laserNode.x][this.laserNode.y][direction];
-            if(laserLine) {
-                //this.currentAim.addChild(laserLine.aim);
-                this.currentDirection = direction;
-            }
-        }
-    };
-
-    p.updateLaser = function() {
-        if(this.laserTimer <= 0 && this.laserNodes[this.laserNode.x][this.laserNode.y][this.currentDirection]) {
-            this.currentLaser.addChild(this.laserNodes[this.laserNode.x][this.laserNode.y][this.currentDirection].laser);
-            this.currentCollision.addChild(this.laserNodes[this.laserNode.x][this.laserNode.y][this.currentDirection].collision);
+    p.updateLaser = function(laserLine) {
+        if(this.laserTimer <= 0) {
+            this.currentLaser.addChild(laserLine.laser);
+            this.currentCollision.addChild(laserLine.collision);
             this.laserTimer = laserDuration;
         }
-    };
-
-    p.updatePosition = function() {
-        //this.currentAim.removeAllChildren();
-        this.laserNodes[this.laserNode.x][this.laserNode.y].bitmap.alpha = 0.5;
-        if(this.laserNode.x == 0 && this.laserNode.y == 0)
-            this.laserNode.x = 1;
-        else if(this.laserNode.x == 1 && this.laserNode.y == 0)
-            this.laserNode.y = 1;
-        else if(this.laserNode.x == 1 && this.laserNode.y == 1)
-            this.laserNode.x = 0;
-        else if(this.laserNode.x == 0 && this.laserNode.y == 1)
-            this.laserNode.y = 0;
-        this.laserNodes[this.laserNode.x][this.laserNode.y].bitmap.alpha = 1.0;
-        this.currentDirection = null;
     };
 
     p.constructLaserNode = function(x, y) {
@@ -151,7 +84,6 @@
         bitmap.y = y;
         bitmap.regX = gunSize/2;
         bitmap.regY = gunSize/2;
-        bitmap.alpha = 0.5;
         this.addChild(bitmap);
         return {x: x, y: y, bitmap: bitmap};
     };
@@ -178,15 +110,7 @@
     p.constructLaserLine = function(startX, startY, endX, endY) {
         var width = endX - startX;
         var height = endY - startY;
-/*
-        var laserAim = new createjs.Shape();
-        laserAim.graphics.beginFill("#ffffff").drawRect(0, 0, width, height);
-        laserAim.alpha = 0.2;
-        laserAim.x = startX + gunSize/2;
-        laserAim.y = startY + gunSize/2;
-        laserAim.regX = gunSize/2;
-        laserAim.regY = gunSize/2;
-*/
+
         var laser = new createjs.Shape();
         laser.graphics.beginFill("#7777ff").drawRect(0, 0, width, height);
         laser.alpha = 0.4;
@@ -212,7 +136,6 @@
         }
 
         return {
-            //aim: laserAim,
             laser: laser,
             collision: laserCollisionBitmap
         };
