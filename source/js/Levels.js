@@ -106,10 +106,26 @@
             level: window.DeepBeatLevels.Level1
         }, {
             text: "Help",
-            level: window.DeepBeatLevels.Level1
-        }]))
+            level: window.DeepBeatLevels.HelpMenu
+        }]));
     };
     window.DeepBeatLevels.MainMenu.prototype = _.extend(new Level(), {});
+
+    window.DeepBeatLevels.HelpMenu = function(stage) {
+        Level.apply(this, [stage]);
+        stage.addChild(new Menu([{
+            text: "Back",
+            level: window.DeepBeatLevels.MainMenu
+        }]));
+        var text = new createjs.Text("Use the arrow keys to shoot your laser!\nShoot objects before they damage your space station!", "bold 24px Arial", "#FFFFFF");
+        text.maxWidth = 1000;
+        text.textAlign = "center";
+        text.textBaseline = "middle";
+        text.x = DeepBeat.windowWidth / 2;
+        text.y = 100;
+        stage.addChild(text);
+    };
+    window.DeepBeatLevels.HelpMenu.prototype = _.extend(new Level(), {});
 
     // Define first level
     window.DeepBeatLevels.Level1 = function(stage) {
