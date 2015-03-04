@@ -11,8 +11,8 @@ DeepBeat = {
     currentLevel: null,
     firstLevel: null,
 
-    windowWidth: 1024,
-    windowHeight: 608,
+    windowWidth: 640,
+    windowHeight: 640,
 
     collisionTypes: {
         "Enemy": []
@@ -67,7 +67,7 @@ DeepBeat = {
 
         // Preload the following assets
         var assetsPath = "../assets/";
-        this.manifest = [
+        this.manifest = [ // Be sure to define bpm of song for each level in Level.js
             {id: "level1Music", src: "audio/Phazd_tobycreed.mp3"},
             //{id: "level1Music", src: "audio/Ghost_mysteryskulls.mp3"},
             {id: "gun", src: "images/gun.png"},
