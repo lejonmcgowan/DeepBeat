@@ -36,4 +36,9 @@
         this.setHealth(this.health - dh);
     }
 
+    p.incrementHealth = function(dh) {
+        if (this.health + dh < 100)
+            this.setHealth(this.health + dh);
+    }
+
 }(window));
