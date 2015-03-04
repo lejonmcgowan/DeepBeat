@@ -31,12 +31,12 @@
             this.yPos += this.yDir * this.speed * DeepBeat.dt;
         } else if (this.type == DeepBeat.enemyType.wave) {
             if (this.xDir == 0) {
-                this.xPos = DeepBeat.windowWidth/2 + 50 * Math.cos(this.speed/3 * this.yPos);
+                this.xPos = DeepBeat.windowWidth/2 + 50 * Math.cos(this.speed/6 * this.yPos);
                 this.yPos += this.yDir * this.speed * DeepBeat.dt;
             }
             if (this.yDir == 0) {
                 this.xPos += this.xDir * this.speed * DeepBeat.dt;
-                this.yPos = DeepBeat.windowHeight/2 + 50 * Math.cos(this.speed/3 * this.xPos);
+                this.yPos = DeepBeat.windowHeight/2 + 50 * Math.cos(this.speed/6 * this.xPos);
             }
         }
         

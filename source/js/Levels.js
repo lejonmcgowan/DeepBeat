@@ -80,20 +80,19 @@
         return Math.random()<.5;
     }
     
-    // Psuedo-randomly produce a level with enemies
-    var level1Design = function(enemies) {
-        var xDir = 1;
-        var yDir = 0;
-        
-        for (var phrase = 1; phrase < 16; phrase++) {
-            var number = Math.pow(2, Math.floor(Math.min(Math.log(phrase*2),3))+2);
+    // Randomly generate enemies
+    var randomDesign = function(enemies) {
+        for (var phrase = 1; phrase < 15; phrase++) {
             var speed = Math.log(phrase)*0.05 + 0.1;
-            var type = randBool() ? DeepBeat.enemyType.linear : DeepBeat.enemyType.wave;
+            var type = phrase>=8 ? DeepBeat.enemyType.wave : DeepBeat.enemyType.linear;
             
-            addEnemyGroup(enemies, phrase, 0, 0, number, 32/number, speed, xDir, yDir, type);   
-            
-            xDir = xDir == 0 ? (randBool() ? -1 : 1) : 0;
-            yDir = yDir == 0 ? (randBool() ? -1 : 1) : 0;
+            for (var measure = 0; measure < 8; measure++) {
+                xDir = randBool() ? (randBool() ? -1 : 1) : 0;
+                yDir = xDir == 0 ? (randBool() ? -1 : 1) : 0;
+                for (var beat = 0; beat < 4; beat++) {
+                    addEnemy(enemies, phrase, measure, beat, speed, xDir, yDir, type);
+                }
+            }
         }
     }
 
@@ -137,7 +136,7 @@
         this.music = createjs.Sound.play("level1Music");
         this.enemies = [];
         
-        level1Design(this.enemies);
+        randomDesign(this.enemies);
 
         this.enemies = sortEnemies(this.beatRate, this.enemies);
     };

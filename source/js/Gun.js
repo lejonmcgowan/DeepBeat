@@ -1,7 +1,7 @@
 (function (window) {
     var gunSize = 32;
     var laserSize = 32; // TODO reduce laser size?
-    var laserDuration = 100;
+    var laserDuration = 150;
 
     function Gun() {
         this.Container_constructor();
