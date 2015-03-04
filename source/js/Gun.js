@@ -55,7 +55,7 @@
 
         DeepBeat.addCollisionHandler(this, this.currentCollision, "Enemy", function(other) {
             DeepBeat.removeObject(other);
-            DeepBeat.currentLevel.health.incrementHealth(1); // Get equal amount health back from firing laser. Stops user from spamming laser
+            DeepBeat.currentLevel.health.incrementHealth(2);
         });
     }
     var p = createjs.extend(Gun, createjs.Container);

@@ -137,7 +137,6 @@
         this.music = createjs.Sound.play("level1Music");
         this.enemies = [];
         
-        // Level enemy design (https://docs.google.com/spreadsheets/d/1A6TbD9uX-BzYY3LA29Rkb5xUfGDKnTwhemWctucYRRk/edit#gid=1841141855)
         level1Design(this.enemies);
 
         this.enemies = sortEnemies(this.beatRate, this.enemies);

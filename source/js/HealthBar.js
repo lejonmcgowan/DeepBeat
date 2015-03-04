@@ -37,8 +37,8 @@
     }
 
     p.incrementHealth = function(dh) {
-        if (this.health + dh < 100)
-            this.setHealth(this.health + dh);
+        var incr = Math.min(100, this.health + dh);
+        this.setHealth(incr);
     }
 
 }(window));
