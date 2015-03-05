@@ -72,12 +72,16 @@
     }
 
     p.updateLaser = function(laserLine) {
-        if(this.laserTimer <= 0) {
-            this.currentLaser.addChild(laserLine.laser);
-            this.currentCollision.addChild(laserLine.collision);
-            this.laserTimer = laserDuration;
-            DeepBeat.currentLevel.health.decrementHealth(1); // Lose health whenever shoot laser but earn equal amount back if hit enemy. This way user can't spam
+        // Place laser in new direction
+        if (this.laserTimer > 0) {
+            this.currentLaser.removeAllChildren();
+            this.currentCollision.removeAllChildren();
+            this.laserTimer = 0;
         }
+        this.currentLaser.addChild(laserLine.laser);
+        this.currentCollision.addChild(laserLine.collision);
+        this.laserTimer = laserDuration;
+        DeepBeat.currentLevel.health.decrementHealth(1); // Lose health whenever shoot laser but earn equal amount back if hit enemy. This way user can't spam
     };
 
     p.constructLaserNode = function(x, y) {

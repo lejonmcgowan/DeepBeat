@@ -20,7 +20,7 @@
         this.speed = params[4];
         this.type = params[5];
         
-        this.angle = 0.7*Math.PI;
+        this.angle = 0.2*Math.PI;
 
         DeepBeat.addCollisionType(this, "Enemy");
     }
@@ -33,18 +33,27 @@
             this.yPos += this.yDir * this.speed * DeepBeat.dt;
         } else if (this.type == DeepBeat.enemyType.wave) {
             if (this.xDir == 0) {
-                this.xPos = DeepBeat.windowWidth/2 + 50 * Math.cos(this.speed/6 * this.yPos);
+                this.xPos = DeepBeat.windowWidth/2 + 50 * Math.cos(this.speed/8 * this.yPos);
                 this.yPos += this.yDir * this.speed * DeepBeat.dt;
             }
             if (this.yDir == 0) {
                 this.xPos += this.xDir * this.speed * DeepBeat.dt;
-                this.yPos = DeepBeat.windowHeight/2 + 50 * Math.cos(this.speed/6 * this.xPos);
+                this.yPos = DeepBeat.windowHeight/2 + 50 * Math.cos(this.speed/8 * this.xPos);
             }
         } else if (this.type == DeepBeat.enemyType.spiral) {
-            this.xPos = (100 * Math.cos(this.angle) * Math.pow(Math.E, 1 * this.angle)) + DeepBeat.windowWidth/2;
-            this.yPos = (100 * Math.sin(this.angle) * Math.pow(Math.E, 1 * this.angle)) + DeepBeat.windowHeight/2;
-            this.angle -= 0.01*this.speed*DeepBeat.dt;
-            console.log("xPos: "+this.xPos+"\tyPos: "+this.yPos+"\tangle: "+this.angle+"\n");
+            var x = (200 * Math.cos(this.angle) * Math.pow(Math.E, 1 * this.angle));
+            var y = (200 * Math.sin(this.angle) * Math.pow(Math.E, 1 * this.angle));
+            if (this.xDir == 0) {
+                this.xPos = y * this.yDir;
+                this.yPos = x * this.yDir;
+            }
+            if (this.yDir == 0) {
+                this.xPos = x * -this.xDir;
+                this.yPos = y * this.xDir;
+            }
+            this.xPos += DeepBeat.windowWidth/2;
+            this.yPos += DeepBeat.windowHeight/2;
+            this.angle -= 0.005*this.speed*DeepBeat.dt;
         }
         
         this.x = BlackholeDistortX(this.xPos, this.yPos);
