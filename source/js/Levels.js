@@ -105,6 +105,7 @@
     window.DeepBeatLevels = {};
 
     window.DeepBeatLevels.MainMenu = function(stage) {
+        DeepBeat.canvas.style.backgroundColor = "black";
         Level.apply(this, [stage]);
         stage.addChild(new Menu([{
             text: "Play Game",
