@@ -96,7 +96,6 @@
                 var type = Math.random()*15<phrase
                     ? (randBool() ? DeepBeat.enemyType.spiral : DeepBeat.enemyType.wave)
                     : DeepBeat.enemyType.linear;
-                type = DeepBeat.enemyType.wave; 
                 var beatIncr = Math.random()*10<phrase ? ((randBool() && phrase>8) ? 0.5 : 1) : 2;
                 changeDirs();
                 
