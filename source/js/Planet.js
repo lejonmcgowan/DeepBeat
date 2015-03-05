@@ -7,7 +7,7 @@
         this.speed = speed;
         this.circleX = 0;
         this.circleY = 0;
-        this.time = 0;
+        this.time = Math.random()*3;
         this.alpha = 0.6;
 
         this.circles = [];

@@ -3,6 +3,7 @@
     function Background(size, speed) {
         this.Container_constructor();
         this.addChild(new Stars());
+        this.addChild(new Planet((Math.random()+0.8)*160,(Math.random()+0.8)*160));
         this.addChild(new Planet((Math.random()+0.8)*300,(Math.random()+0.8)*300));
         this.time = 0;
 
