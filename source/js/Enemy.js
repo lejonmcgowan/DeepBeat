@@ -19,6 +19,8 @@
         this.yDir = params[3];
         this.speed = params[4];
         this.type = params[5];
+        
+        this.angle = 0.7*Math.PI;
 
         DeepBeat.addCollisionType(this, "Enemy");
     }
@@ -38,6 +40,11 @@
                 this.xPos += this.xDir * this.speed * DeepBeat.dt;
                 this.yPos = DeepBeat.windowHeight/2 + 50 * Math.cos(this.speed/6 * this.xPos);
             }
+        } else if (this.type == DeepBeat.enemyType.spiral) {
+            this.xPos = (100 * Math.cos(this.angle) * Math.pow(Math.E, 1 * this.angle)) + DeepBeat.windowWidth/2;
+            this.yPos = (100 * Math.sin(this.angle) * Math.pow(Math.E, 1 * this.angle)) + DeepBeat.windowHeight/2;
+            this.angle -= 0.01*this.speed*DeepBeat.dt;
+            console.log("xPos: "+this.xPos+"\tyPos: "+this.yPos+"\tangle: "+this.angle+"\n");
         }
         
         this.x = BlackholeDistortX(this.xPos, this.yPos);

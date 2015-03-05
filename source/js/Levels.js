@@ -86,7 +86,8 @@
             var speed = Math.log(phrase)*0.05 + 0.1;
             
             for (var measure = 0; measure < 8; measure++) {
-                var type = Math.random()*20<phrase ? DeepBeat.enemyType.wave : DeepBeat.enemyType.linear;
+                //var type = Math.random()*20<phrase ? DeepBeat.enemyType.wave : DeepBeat.enemyType.linear;
+                var type = DeepBeat.enemyType.spiral;
                 var beatIncr = Math.random()*10<phrase ? ((randBool() && phrase>8) ? 0.5 : 1) : 2;
                 var xDir = randBool() ? (randBool() ? -1 : 1) : 0;
                 var yDir = xDir == 0 ? (randBool() ? -1 : 1) : 0;

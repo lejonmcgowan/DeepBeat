@@ -20,7 +20,8 @@ DeepBeat = {
     
     enemyType: { // How to enum: http://stackoverflow.com/questions/287903/enums-in-javascript
         linear: 0,
-        wave: 1
+        wave: 1,
+        spiral: 2
     },
 
     collisionFroms: [],
