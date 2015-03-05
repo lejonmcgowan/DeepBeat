@@ -8,7 +8,7 @@
         this.circleX = 0;
         this.circleY = 0;
         this.time = 0;
-        this.alpha = 0.3;
+        this.alpha = 0.6;
 
         this.circles = [];
         for(var a = 0; a < size; a += 50) {
@@ -36,7 +36,7 @@
 
     p.tick = function() {
 
-        this.time += DeepBeat.dt/50000;
+        this.time += DeepBeat.dt*this.speed/50000000;
 
         this.circleX = DeepBeat.windowWidth*Math.sin(this.time*2.6)*Math.cos(this.time);
         this.circleY = DeepBeat.windowWidth*Math.sin(this.time*2.6)*Math.sin(this.time);
