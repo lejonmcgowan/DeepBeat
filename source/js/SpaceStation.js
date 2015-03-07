@@ -159,4 +159,26 @@
         DeepBeat.currentLevel.health.decrementHealth(10);
     }
 
+    window.SSDistortX = function(x, y) {
+        var ny = y - DeepBeat.windowHeight / 2;
+        var nx = x - DeepBeat.windowWidth / 2;
+        var dx = nx / (DeepBeat.windowWidth / 7);
+        var dy = ny / (DeepBeat.windowHeight / 7);
+        var d = dx * dx + dy * dy;
+        if(d > 1)
+            return x;
+        return DeepBeat.windowWidth/2+nx*d;
+    }
+
+    window.SSDistortY = function(x, y) {
+        var ny = y - DeepBeat.windowHeight / 2;
+        var nx = x - DeepBeat.windowWidth / 2;
+        var dx = nx / (DeepBeat.windowWidth / 7);
+        var dy = ny / (DeepBeat.windowHeight / 7);
+        var d = dx * dx + dy * dy;
+        if(d > 1)
+            return y;
+        return DeepBeat.windowHeight/2+ny*d;
+    }
+
 }(window));

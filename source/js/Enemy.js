@@ -61,14 +61,14 @@
             this.angle -= 0.005*this.speed*DeepBeat.dt;
         }
         
-        this.x = BlackholeDistortX(this.xPos, this.yPos);
-        this.y = BlackholeDistortY(this.xPos, this.yPos);
+        this.x = SSDistortX(this.xPos, this.yPos);
+        this.y = SSDistortY(this.xPos, this.yPos);
         this.shape.graphics.clear();
         this.shape.graphics.beginFill("#AA0000");
-        this.shape.graphics.moveTo(BlackholeDistortX(this.xPos - size/2, this.yPos - size/2) - this.x, BlackholeDistortY(this.xPos - size/2, this.yPos - size/2) - this.y);
-        this.shape.graphics.lineTo(BlackholeDistortX(this.xPos - size/2, this.yPos + size/2) - this.x, BlackholeDistortY(this.xPos - size/2, this.yPos + size/2) - this.y);
-        this.shape.graphics.lineTo(BlackholeDistortX(this.xPos + size/2, this.yPos + size/2) - this.x, BlackholeDistortY(this.xPos + size/2, this.yPos + size/2) - this.y);
-        this.shape.graphics.lineTo(BlackholeDistortX(this.xPos + size/2, this.yPos - size/2) - this.x, BlackholeDistortY(this.xPos + size/2, this.yPos - size/2) - this.y);
+        this.shape.graphics.moveTo(SSDistortX(this.xPos - size/2, this.yPos - size/2) - this.x, SSDistortY(this.xPos - size/2, this.yPos - size/2) - this.y);
+        this.shape.graphics.lineTo(SSDistortX(this.xPos - size/2, this.yPos + size/2) - this.x, SSDistortY(this.xPos - size/2, this.yPos + size/2) - this.y);
+        this.shape.graphics.lineTo(SSDistortX(this.xPos + size/2, this.yPos + size/2) - this.x, SSDistortY(this.xPos + size/2, this.yPos + size/2) - this.y);
+        this.shape.graphics.lineTo(SSDistortX(this.xPos + size/2, this.yPos - size/2) - this.x, SSDistortY(this.xPos + size/2, this.yPos - size/2) - this.y);
         this.shape.graphics.endFill(); // draw the last line segment back to the start point.
     };
 
