@@ -17,11 +17,11 @@
         this.time += DeepBeat.dt/5000;
         if(DeepBeat.currentLevel.health.health < 40) {
             this.setOverlayColor("rgb("+Math.round(Math.cos(this.time*30)*50 + 50)+",0,0)");
-        } else if(DeepBeat.currentLevel.health.health < 60) {
+        } else {// if(DeepBeat.currentLevel.health.health < 60) {
             this.setOverlayColor("rgb(0,0,0)");
-        } else {
-            this.setOverlayColor("rgb(20,"+Math.round(Math.sin(this.time)*20+20)+","+Math.round(Math.cos(this.time)*20+20)+")");
-        }
+        }// else {
+        //    this.setOverlayColor("rgb(20,"+Math.round(Math.sin(this.time)*20+20)+","+Math.round(Math.cos(this.time)*20+20)+")");
+        //}
     };
 
     p.setOverlayColor = function(color) {

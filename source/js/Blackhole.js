@@ -32,7 +32,7 @@
 
     p.tick = function (event) {
         this.rotation++;
-        addPulseCircle(this);
+        //addPulseCircle(this);
     }
 
     window.BlackholeDistortX = function(x, y) {

@@ -35,6 +35,8 @@
         this.x = 0;
         this.y = 0;
 
+
+
         DeepBeat.addKeyHandler(this, "keydown-up", function() {
             this.updateLaser(this.laserNodes[0][0].right);
         });
@@ -85,13 +87,20 @@
     };
 
     p.constructLaserNode = function(x, y) {
-        var bitmap = new createjs.Bitmap(DeepBeat.preload.getResult("gun"));
-        bitmap.x = x;
-        bitmap.y = y;
-        bitmap.regX = gunSize/2;
-        bitmap.regY = gunSize/2;
-        this.addChild(bitmap);
-        return {x: x, y: y, bitmap: bitmap};
+        var shape = new createjs.Shape();
+        shape.x = x;
+        shape.y = y;
+        shape.regX = 0;
+        shape.regY = 0;
+        shape.graphics.clear();
+        shape.graphics.beginFill("#2DBEFB");
+        shape.graphics.beginStroke("#2DFEFB");
+        shape.graphics.setStrokeStyle(2);
+        shape.graphics.drawCircle(0,0,gunSize/2 - 5);
+        shape.graphics.beginFill("#2DFEFB");
+        shape.graphics.drawCircle(0,0,gunSize/2 - 10);
+        this.addChild(shape);
+        return {x: x, y: y, shape: shape};
     };
 
     p.constructLaserLines = function(laserNodes) {
@@ -118,27 +127,33 @@
         var height = endY - startY;
 
         var laser = new createjs.Shape();
-        laser.graphics.beginFill("#7777ff").drawRect(0, 0, width, height);
-        laser.alpha = 0.4;
-        laser.x = startX
-        laser.y = startY
-        //laser.regX = gunSize/2;
-        //laser.regY = gunSize/2;
+        var laserCollisionBitmap;
+
 
         if(width < 64) {
-            var laserCollisionImage = new Image(16, height);
+            laser.graphics.beginFill("#2DFEFB").drawRoundRect(10, -gunSize/2 + 10, width - 20, height + gunSize - 20, 10);
+            laser.alpha = 0.5;
+            laser.x = startX
+            laser.y = startY
+
+            var laserCollisionImage = new Image(12, height);
             laserCollisionBitmap = new createjs.Bitmap(laserCollisionImage);
-            //laserCollisionBitmap.regX = 8;
-            //laserCollisionBitmap.regY = 0;
-            laserCollisionBitmap.x = startX + 8;
+            laserCollisionBitmap.x = startX + 10;
             laserCollisionBitmap.y = startY;
+            laserCollisionBitmap.regX = 0;
+            laserCollisionBitmap.regY = 0;
         } else {
-            var laserCollisionImage = new Image(width, 16);
+            laser.graphics.beginFill("#2DFEFB").drawRoundRect(-gunSize/2 + 10, 10, width + gunSize - 20, height-20, 10);
+            laser.alpha = 0.5;
+            laser.x = startX
+            laser.y = startY
+
+            var laserCollisionImage = new Image(width, 12);
             laserCollisionBitmap = new createjs.Bitmap(laserCollisionImage);
-            //laserCollisionBitmap.regX = 0;
-            //laserCollisionBitmap.regY = 8;
             laserCollisionBitmap.x = startX;
-            laserCollisionBitmap.y = startY + 8;
+            laserCollisionBitmap.y = startY + 10;
+            laserCollisionBitmap.regX = 0;
+            laserCollisionBitmap.regY = 0;
         }
 
         return {

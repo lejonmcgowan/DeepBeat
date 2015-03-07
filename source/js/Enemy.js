@@ -7,7 +7,10 @@
         this.shape = new createjs.Shape();
         this.addChild(this.shape);
 
-        this.addChild(new createjs.Bitmap(new Image(size, size)));
+        var collision = new createjs.Bitmap(new Image(size, size));
+        collision.regX = size / 2;
+        collision.regY = size / 2;
+        this.addChild(collision);
         //this.addChild(new createjs.Bitmap(DeepBeat.preload.getResult("enemy")));
 
         this.on("tick", p.tick);
