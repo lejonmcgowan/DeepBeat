@@ -17,28 +17,32 @@
             this.points.push({
                 x: -11,
                 y: i,
-                health: 1
+                health: 1,
+                targetHealth: 1
             });
         }
         for(var i = -10; i <= 10; i++) {
             this.points.push({
                 x: i,
                 y: 11,
-                health: 1
+                health: 1,
+                targetHealth: 1
             });
         }
         for(var i = 10; i >= -10; i--) {
             this.points.push({
                 x: 11,
                 y: i,
-                health: 1
+                health: 1,
+                targetHealth: 1
             });
         }
         for(var i = 10; i >= -10; i--) {
             this.points.push({
                 x: i,
                 y: -11,
-                health: 1
+                health: 1,
+                targetHealth: 1
             });
         }
         
@@ -53,19 +57,24 @@
             this.checkCollision(other);
         });
 
+        this.on("tick", this.tick);
+
     }
     var p = createjs.extend(SpaceStation, createjs.Container);
     window.SpaceStation = createjs.promote(SpaceStation, "Container")
 
     p.tick = function (event) {
-        this.rotation++;
-        //addPulseCircle(this);
+        if(DeepBeat.currentLevel.health) {
+            this.drawShape(DeepBeat.currentLevel.health.health);
+        }
     }
 
     p.drawShape = function(health) {
         this.shape.graphics.clear().beginFill("rgba("+parseInt((100-health)*2.22)+","+parseInt((health)*2.22)+",0,1)").beginStroke("rgba("+parseInt((100-health)*2.55)+","+parseInt((health)*2.55)+",0,1)").setStrokeStyle(2);
         this.shape.graphics.moveTo(this.points[this.points.length-1].x * this.points[this.points.length-1].health * this.size/23, this.points[this.points.length-1].y * this.points[this.points.length-1].health * this.size/23);
         for(var i = 0; i < this.points.length; i++) {
+            this.points[i].health += (this.points[i].targetHealth - this.points[i].health)/10;
+            this.points[i].targetHealth += (1 - this.points[i].targetHealth)/200;
             this.shape.graphics.lineTo(this.points[i].x * this.points[i].health * this.size/23, this.points[i].y * this.points[i].health * this.size/23);
         }
         this.shape.graphics.endFill().endStroke();
@@ -140,17 +149,14 @@
     }
 
     p.distort = function(index) {
-        for(var i = -4; i <= 4; i++) {
-            this.getPoint(index + i).health *= 0.2 * Math.abs(i) / 4 + 0.8;
+        for(var i = -8; i <= 8; i++) {
+            this.getPoint(index + i).targetHealth *= 0.4 * Math.abs(i) / 8 + 0.6;
         }
     }
 
     p.removeEnemy = function(other) {
         DeepBeat.removeObject(other);
         DeepBeat.currentLevel.health.decrementHealth(10);
-        if(DeepBeat.currentLevel.health) {
-            this.drawShape(DeepBeat.currentLevel.health.health);
-        }
     }
 
 }(window));
