@@ -36,6 +36,7 @@
     }
 
     window.BlackholeDistortX = function(x, y) {
+        return x;
         var ny = y - DeepBeat.windowHeight / 2;
         var nx = x - DeepBeat.windowWidth / 2;
         var dx = nx / (DeepBeat.windowWidth / 6);
@@ -49,6 +50,7 @@
     }
 
     window.BlackholeDistortY = function(x, y) {
+        return y;
         var ny = y - DeepBeat.windowHeight / 2;
         var nx = x - DeepBeat.windowWidth / 2;
         var dx = nx / (DeepBeat.windowWidth / 6);

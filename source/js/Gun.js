@@ -11,6 +11,36 @@
         this.x = 0;
         this.y = 0;
 
+
+        var bar1 = new createjs.Shape();
+        bar1.graphics.clear();
+        bar1.graphics.beginFill("#2D6EFB");
+        bar1.graphics.beginStroke("#2D8EFB");
+        bar1.graphics.setStrokeStyle(3);
+        bar1.graphics.drawRoundRect(0, 0, (DeepBeat.windowWidth/3)*Math.sqrt(2), gunSize - 10, 5);
+        bar1.regX = (DeepBeat.windowHeight/3)*Math.sqrt(2)/2;
+        bar1.regY = (gunSize - 10) / 2;
+        bar1.x = DeepBeat.windowWidth / 2;
+        bar1.y = DeepBeat.windowHeight / 2;
+        bar1.rotation = 45;
+        bar1.alpha = 0.5;
+        this.addChild(bar1);
+
+
+        bar1 = new createjs.Shape();
+        bar1.graphics.clear();
+        bar1.graphics.beginFill("#2D6EFB");
+        bar1.graphics.beginStroke("#2D8EFB");
+        bar1.graphics.setStrokeStyle(3);
+        bar1.graphics.drawRoundRect(0, 0, (DeepBeat.windowWidth/3)*Math.sqrt(2), gunSize - 10, 5);
+        bar1.regX = (DeepBeat.windowHeight/3)*Math.sqrt(2)/2;
+        bar1.regY = (gunSize - 10) / 2;
+        bar1.x = DeepBeat.windowWidth / 2;
+        bar1.y = DeepBeat.windowHeight / 2;
+        bar1.rotation = -45;
+        bar1.alpha = 0.5;
+        this.addChild(bar1);
+
         this.laserNodes = [
             [
                 this.constructLaserNode(DeepBeat.windowWidth/3, DeepBeat.windowHeight/3),
@@ -34,7 +64,6 @@
         
         this.x = 0;
         this.y = 0;
-
 
 
         DeepBeat.addKeyHandler(this, "keydown-up", function() {

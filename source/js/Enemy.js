@@ -10,6 +10,8 @@
         var collision = new createjs.Bitmap(new Image(size, size));
         collision.regX = size / 2;
         collision.regY = size / 2;
+        collision.x = 0;
+        collision.y = 0;
         this.addChild(collision);
         //this.addChild(new createjs.Bitmap(DeepBeat.preload.getResult("enemy")));
 
