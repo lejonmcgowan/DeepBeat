@@ -64,11 +64,12 @@
         this.x = SSDistortX(this.xPos, this.yPos);
         this.y = SSDistortY(this.xPos, this.yPos);
         this.shape.graphics.clear();
-        this.shape.graphics.beginFill("#AA0000");
+        this.shape.graphics.beginFill("#770000").beginStroke("#cc0000");
         this.shape.graphics.moveTo(SSDistortX(this.xPos - size/2, this.yPos - size/2) - this.x, SSDistortY(this.xPos - size/2, this.yPos - size/2) - this.y);
         this.shape.graphics.lineTo(SSDistortX(this.xPos - size/2, this.yPos + size/2) - this.x, SSDistortY(this.xPos - size/2, this.yPos + size/2) - this.y);
         this.shape.graphics.lineTo(SSDistortX(this.xPos + size/2, this.yPos + size/2) - this.x, SSDistortY(this.xPos + size/2, this.yPos + size/2) - this.y);
         this.shape.graphics.lineTo(SSDistortX(this.xPos + size/2, this.yPos - size/2) - this.x, SSDistortY(this.xPos + size/2, this.yPos - size/2) - this.y);
+        this.shape.graphics.lineTo(SSDistortX(this.xPos - size/2, this.yPos - size/2) - this.x, SSDistortY(this.xPos - size/2, this.yPos - size/2) - this.y);
         this.shape.graphics.endFill(); // draw the last line segment back to the start point.
     };
 

@@ -150,7 +150,7 @@
 
     p.distort = function(index) {
         for(var i = -8; i <= 8; i++) {
-            this.getPoint(index + i).targetHealth *= 0.4 * Math.abs(i) / 8 + 0.6;
+            this.getPoint(index + i).targetHealth *= 0.4 * Math.pow(Math.abs(i) / 8, 2) + 0.6;
         }
     }
 

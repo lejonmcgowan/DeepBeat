@@ -44,6 +44,9 @@
                     }
                 }
             }
+            if(DeepBeat.currentLevel.music) {
+                DeepBeat.currentLevel.music.setVolume(this.explosionTimer/2000);
+            }
         }
     }
 
