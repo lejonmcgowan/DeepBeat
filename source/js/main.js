@@ -54,6 +54,7 @@ DeepBeat = {
 
         this.canvas = document.getElementById("gameCanvas");
         this.stage = new createjs.Stage(this.canvas);
+        this.background = new Background();
         this.keysEventDispatcher = new createjs.EventDispatcher();
         
         // Loading message
@@ -105,11 +106,13 @@ DeepBeat = {
     },
 
     setLevel: function(level) {
+        this.dt = 17;
         createjs.Sound.stop();
         if(this.currentLevel) {
             this.currentLevel.end();
         }
         this.stage.removeAllChildren();
+        this.stage.addChild(this.background);
         this.currentLevel = new level(this.stage);
     },
 

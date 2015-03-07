@@ -146,7 +146,6 @@
     // Define first level
     window.DeepBeatLevels.Level1 = function(stage) {
         Level.apply(this, [stage]);
-        stage.addChild(new Background());
         stage.addChild(new Gun());
         stage.addChild(new Blackhole());
         this.health = new HealthBar();
