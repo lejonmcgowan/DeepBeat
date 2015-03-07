@@ -85,6 +85,7 @@
         });
 
         DeepBeat.addCollisionHandler(this, this.currentCollision, "Enemy", function(other) {
+            DeepBeat.addObject(new Explosion(other.x,other.y,25,150));
             DeepBeat.removeObject(other);
             DeepBeat.currentLevel.health.incrementHealth(2);
         });

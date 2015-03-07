@@ -127,13 +127,29 @@
     };
     window.DeepBeatLevels.MainMenu.prototype = _.extend(new Level(), {});
 
+    window.DeepBeatLevels.LoseMenu = function(stage) {
+        Level.apply(this, [stage]);
+        stage.addChild(new Menu([{
+            text: "Back to Main Menu",
+            level: window.DeepBeatLevels.MainMenu
+        }]));
+        var text = new createjs.Text("The space station collapsed.\n\nYou survived for " + Math.floor(DeepBeat.timeSurvived/60) + " minutes and "+Math.round(DeepBeat.timeSurvived%60)+" seconds.", "24px Verdana", "#FFFFFF");
+        text.maxWidth = 1000;
+        text.textAlign = "center";
+        text.textBaseline = "middle";
+        text.x = DeepBeat.windowWidth / 2;
+        text.y = 100;
+        stage.addChild(text);
+    };
+    window.DeepBeatLevels.LoseMenu.prototype = _.extend(new Level(), {});
+
     window.DeepBeatLevels.HelpMenu = function(stage) {
         Level.apply(this, [stage]);
         stage.addChild(new Menu([{
             text: "Back",
             level: window.DeepBeatLevels.MainMenu
         }]));
-        var text = new createjs.Text("Use the arrow keys to shoot your laser!\nShoot objects before they damage your space station!", "bold 24px Arial", "#FFFFFF");
+        var text = new createjs.Text("Use the arrow keys to shoot your laser!\n\nShoot objects before they damage\nyour space station!\n\n\n\n\n\n\n\n\n\nCredits\n\nDaniel Johnson\nLeJon McGowan\nChris Williams", "24px Verdana", "#FFFFFF");
         text.maxWidth = 1000;
         text.textAlign = "center";
         text.textBaseline = "middle";
@@ -147,8 +163,15 @@
     window.DeepBeatLevels.Level1 = function(stage) {
         Level.apply(this, [stage]);
         this.health = new HealthBar();
-        stage.addChild(new Gun());
-        stage.addChild(new SpaceStation());
+
+        this.objects = new createjs.Container();
+        this.objects.alpha = 0;
+
+        this.objects.addChild(new Gun());
+        this.objects.addChild(new SpaceStation());
+
+        stage.addChild(this.objects);
+       
         
         stage.addChild(this.health);
         this.music = createjs.Sound.play("level1Music");
@@ -164,10 +187,14 @@
         
         tick: function() {
             this.spawnEnemies();
+            if(this.objects.alpha < 1) {
+                this.objects.alpha += DeepBeat.dt / 1000;
+            }
         },
 
         lostLevel: function() {
-            DeepBeat.setLevel(DeepBeatLevels.MainMenu);
+            DeepBeat.timeSurvived = Math.round(this.music.getPosition() / 1000);
+            DeepBeat.setLevel(DeepBeatLevels.LoseMenu);
         }
     });
 

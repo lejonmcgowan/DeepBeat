@@ -23,6 +23,8 @@
             }// else {
             //    this.setOverlayColor("rgb(20,"+Math.round(Math.sin(this.time)*20+20)+","+Math.round(Math.cos(this.time)*20+20)+")");
             //}
+        } else {
+            this.setOverlayColor("rgb(0,0,0)");
         }
 
     };

@@ -58,7 +58,7 @@ DeepBeat = {
         this.keysEventDispatcher = new createjs.EventDispatcher();
         
         // Loading message
-		this.messageField = new createjs.Text("Loading", "bold 24px Arial", "#FFFFFF");
+		this.messageField = new createjs.Text("Loading", "24px Verdana", "#FFFFFF");
 		this.messageField.maxWidth = 1000;
 		this.messageField.textAlign = "center";
 		this.messageField.textBaseline = "middle";
@@ -198,6 +198,10 @@ DeepBeat = {
 
     removeObject: function(obj) {
         this.stage.removeChild(obj);
+    },
+
+    addObject: function(obj) {
+        this.stage.addChild(obj);
     }
 };
 

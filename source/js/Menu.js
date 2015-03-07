@@ -8,7 +8,7 @@
 
         for(var i = 0; i < menuItems.length; i++) {
             this.menuItems.push({
-                text: new createjs.Text(menuItems[i].text, "20px Arial", "#aaa"),
+                text: new createjs.Text(menuItems[i].text, "24px Verdana", "#aaa"),
                 level: menuItems[i].level
             });
             this.menuItems[i].text.x = DeepBeat.windowWidth/2 - this.menuItems[i].text.getMeasuredWidth()/2;

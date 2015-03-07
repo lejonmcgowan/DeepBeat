@@ -155,6 +155,7 @@
     }
 
     p.removeEnemy = function(other) {
+        DeepBeat.addObject(new Explosion(other.x,other.y,40,300));
         DeepBeat.removeObject(other);
         DeepBeat.currentLevel.health.decrementHealth(10);
     }
