@@ -87,7 +87,7 @@
         DeepBeat.addCollisionHandler(this, this.currentCollision, "Enemy", function(other) {
             DeepBeat.addObject(new Explosion(other.x,other.y,25,150));
             DeepBeat.removeObject(other);
-            DeepBeat.currentLevel.health.incrementHealth(2);
+            //DeepBeat.currentLevel.health.incrementHealth(2);
         });
     }
     var p = createjs.extend(Gun, createjs.Container);
@@ -116,7 +116,7 @@
         this.currentLaser.addChild(laserLine.laser);
         this.currentCollision.addChild(laserLine.collision);
         this.laserTimer = laserDuration;
-        DeepBeat.currentLevel.health.decrementHealth(1); // Lose health whenever shoot laser but earn equal amount back if hit enemy. This way user can't spam
+        //DeepBeat.currentLevel.health.decrementHealth(1); // Lose health whenever shoot laser but earn equal amount back if hit enemy. This way user can't spam
     };
 
     p.constructLaserNode = function(x, y) {
