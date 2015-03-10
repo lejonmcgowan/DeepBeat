@@ -1,7 +1,7 @@
 (function (window) {
     var gunSize = 32;
     var laserSize = 32; // TODO reduce laser size?
-    var laserDuration = 150;
+    var laserDuration = 100;
 
     function Gun() {
         this.Container_constructor();
@@ -87,7 +87,7 @@
         DeepBeat.addCollisionHandler(this, this.currentCollision, "Enemy", function(other) {
             DeepBeat.addObject(new Explosion(other.x,other.y,25,150));
             DeepBeat.removeObject(other);
-            //DeepBeat.currentLevel.health.incrementHealth(2);
+            DeepBeat.currentLevel.health.incrementHealth(1);
         });
     }
     var p = createjs.extend(Gun, createjs.Container);

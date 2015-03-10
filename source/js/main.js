@@ -71,7 +71,7 @@ DeepBeat = {
         var assetsPath = "../assets/";
         this.manifest = [ // Be sure to define bpm of song for each level in Level.js
             {id: "level1Music", src: "audio/Phazd_tobycreed.mp3"},
-            //{id: "level2Music", src: "audio/Ghost_mysteryskulls.mp3"},
+            {id: "level2Music", src: "audio/Ghost_mysteryskulls.mp3"},
             //{id: "gun", src: "images/gun.png"},
             //{id: "enemy", src: "images/enemy.png"},
             //{id: "blackhole", src: "images/blackhole.png"},

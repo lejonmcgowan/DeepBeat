@@ -142,6 +142,9 @@
             text: "Play Game",
             level: window.DeepBeatLevels.Level1
         }, {
+            text: "Level 2",
+            level: window.DeepBeatLevels.Level2
+        }, {
             text: "Help",
             level: window.DeepBeatLevels.HelpMenu
         }]));
@@ -180,6 +183,10 @@
     };
     window.DeepBeatLevels.HelpMenu.prototype = _.extend(new Level(), {});
 
+    function goToMainMenu(event) {
+        DeepBeat.setLevel(DeepBeatLevels.MainMenu)
+    }
+    
     // Define first level
     window.DeepBeatLevels.Level1 = function(stage) {
         Level.apply(this, [stage]);
@@ -196,6 +203,7 @@
         
         stage.addChild(this.health);
         this.music = createjs.Sound.play("level1Music");
+        this.music.on("complete", goToMainMenu);
         this.enemies = [];
         
         randomDesign(this.enemies);
@@ -205,6 +213,46 @@
 
     window.DeepBeatLevels.Level1.prototype = _.extend(new Level(), {
         beatRate: bpmToBeatRate(165), // define the BPM of the song here
+        
+        tick: function() {
+            this.spawnEnemies();
+            if(this.objects.alpha < 1) {
+                this.objects.alpha += DeepBeat.dt / 1000;
+            }
+        },
+
+        lostLevel: function() {
+            DeepBeat.timeSurvived = Math.round(this.music.getPosition() / 1000);
+            DeepBeat.setLevel(DeepBeatLevels.LoseMenu);
+        }
+    });
+
+    // Define second level
+    window.DeepBeatLevels.Level2 = function(stage) {
+        Level.apply(this, [stage]);
+        this.health = new HealthBar();
+
+        this.objects = new createjs.Container();
+        this.objects.alpha = 0;
+
+        this.objects.addChild(new Gun());
+        this.objects.addChild(new SpaceStation());
+
+        stage.addChild(this.objects);
+       
+        
+        stage.addChild(this.health);
+        this.music = createjs.Sound.play("level2Music");
+        this.music.on("complete", goToMainMenu);
+        this.enemies = [];
+        
+        randomDesign(this.enemies);
+
+        this.enemies = sortEnemies(this.beatRate, this.enemies);
+    };
+
+    window.DeepBeatLevels.Level2.prototype = _.extend(new Level(), {
+        beatRate: bpmToBeatRate(120), // define the BPM of the song here
         
         tick: function() {
             this.spawnEnemies();
