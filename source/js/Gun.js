@@ -104,6 +104,9 @@
     }
 
     p.updateLaser = function(laserLine) {
+        var sfx = createjs.Sound.play("laser");
+        sfx.volume = 0.3;
+        
         // Place laser in new direction
         if (this.laserTimer > 0) {
             this.currentLaser.removeAllChildren();
