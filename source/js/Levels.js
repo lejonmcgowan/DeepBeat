@@ -64,6 +64,16 @@
         });
     };
     
+    var addEnemy = function(enemies, phrase, measure, beat, speed, xPos, yPos, xDir, yDir, type) {
+        enemies.push({
+            beat: phrase*(4*8) + measure*4 + beat,
+            type: Enemy,
+            params: [
+                xPos, yPos, xDir, yDir, speed,
+                type]
+        });
+    };
+    
     var addEnemyGroup = function(enemies, phraseStart, measureStart, beatStart, number, beatIncr, speed, xDir, yDir, type) {
         for (var i = 0; i < number; i++) {
             var beat = (phraseStart*(4*8) + measureStart*4 + beatStart) + i*beatIncr;
@@ -84,28 +94,40 @@
     var randomDesign = function(enemies) {
         var xDir;
         var yDir;
-        this.changeDirs = function() {
-            xDir = randBool() ? (randBool() ? -1 : 1) : 0;
-            yDir = xDir == 0 ? (randBool() ? -1 : 1) : 0;
+        var xPos;
+        var yPos;
+        
+        this.changeDirs = function(pxDir, pyDir, pxPos, pyPos) {
+            xDir = pxDir == 0 ? (randBool() ? (randBool() ? -1 : 1) : 0) : pxDir;
+            yDir = pyDir == 0 ? (xDir == 0 ? (randBool() ? -1 : 1) : 0) : pyDir;
+            xPos = xDir == 0 ? DeepBeat.windowWidth/2 : (xDir == 1 ? 0 : (xDir == -1 ? DeepBeat.windowWidth : pxPos));
+            yPos = yDir == 0 ? DeepBeat.windowHeight/2 : (yDir == 1 ? 0 : (yDir == -1 ? DeepBeat.windowHeight : pyPos));
         }
         
         for (var phrase = 1; phrase < 15; phrase++) {
-            var speed = Math.log(phrase)*0.1 + 0.1;
+            var speed = Math.log(phrase)*0.05 + 0.1;
             
             for (var measure = 0; measure < 8; measure++) {
                 var type = Math.random()*15<phrase
                     ? (randBool() ? DeepBeat.enemyType.spiral : DeepBeat.enemyType.wave)
                     : DeepBeat.enemyType.linear;
-                var beatIncr = Math.random()*10<phrase ? ((randBool() && phrase>8) ? 0.5 : 1) : 2;
-                changeDirs();
+                var beatIncr = Math.random()*6<phrase ? ((randBool() && phrase>8) ? 0.5 : 1) : 2;
+                changeDirs(0, 0, 0, 0);
                 
                 for (var beat = 0; beat < 4; beat+=beatIncr) {
-                    if (phrase>4 && beatIncr >= 1) {
-                        changeDirs();
-                    } else if (beatIncr < 1 && beat%2 == 1) {
-                        changeDirs();
+                    if (beatIncr <= 1 && Math.random()<.5) {
+                        continue;
                     }
-                    addEnemy(enemies, phrase, measure, beat, speed, xDir, yDir, type);
+                
+                    if (phrase>4 && beatIncr >= 1) {
+                        changeDirs(0, 0, 0, 0);
+                    } else if (beatIncr < 1 && beat%2 == 1) {
+                        if (randBool()) {
+                            continue;
+                        }
+                        changeDirs(0, 0, 0, 0);
+                    }
+                    addEnemy(enemies, phrase, measure, beat, speed, xPos, yPos, xDir, yDir, type);
                 }
             }
         }
