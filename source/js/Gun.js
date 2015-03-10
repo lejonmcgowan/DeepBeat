@@ -85,9 +85,11 @@
         });
 
         DeepBeat.addCollisionHandler(this, this.currentCollision, "Enemy", function(other) {
-            DeepBeat.addObject(new Explosion(other.x,other.y,25,150));
-            DeepBeat.removeObject(other);
-            DeepBeat.currentLevel.health.incrementHealth(1);
+            if(this.laserTimer > 0) {
+                DeepBeat.addObject(new Explosion(other.x,other.y,25,150));
+                DeepBeat.removeObject(other);
+                DeepBeat.currentLevel.health.incrementHealth(1);
+            }
         });
     }
     var p = createjs.extend(Gun, createjs.Container);
