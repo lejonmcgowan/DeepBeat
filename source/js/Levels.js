@@ -184,7 +184,7 @@
     window.DeepBeatLevels.HelpMenu.prototype = _.extend(new Level(), {});
 
     function goToMainMenu(event) {
-        DeepBeat.setLevel(DeepBeatLevels.MainMenu)
+        DeepBeat.setLevel(DeepBeatLevels.MainMenu);
     }
     
     // Define first level
