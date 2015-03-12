@@ -14,12 +14,13 @@
  		var rectangle = new createjs.Shape(rectDialogBox); 	
 
  		var textContainer = new createjs.Container();
- 		textContainer.x = 40;
+ 		textContainer.x = 320;
  		textContainer.y = 30;
- 		textContainer.lineWidth = 20;
 
  		var textInDialog = new createjs.Text(text, "20px Arial", "#ff7700");
- 			textInDialog.textBaseline = "alphabetic";
+        textInDialog.textBaseline = "middle";
+        textInDialog.textAlign = "center";
+        textInDialog.lineWidth = 560;
 
  		textContainer.addChild(textInDialog);
 
