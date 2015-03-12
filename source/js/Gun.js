@@ -55,6 +55,8 @@
         this.constructLaserLines(this.laserNodes);
 
         this.laserTimer = 0;
+        this.laserOverheat = 0;
+        this.laserOverheatTimer = 0;
 
         this.currentLaser = new createjs.Container();
         this.currentCollision = new createjs.Container();
@@ -109,9 +111,28 @@
                 this.currentCollision.removeAllChildren();
             }
         }
+        if(this.laserOverheat > 0) {
+            this.laserOverheat -= DeepBeat.dt / 1.5;
+        } else {
+            this.laserOverheat = 0;
+        }
+
+        if(this.laserOverheatTimer > 0) {
+            this.laserOverheatTimer -= DeepBeat.dt;
+        } else {
+            this.laserOverheatTimer = 0;
+        }
     }
 
     p.updateLaser = function(laserLine) {
+        if(this.laserOverheat > 250) {
+            this.laserOverheatTimer = 1500;
+            this.laserOverheat = 0;
+        }
+        if(this.laserOverheatTimer > 0) {
+            return;
+        }
+
         var sfx = createjs.Sound.play("laser");
         sfx.volume = 0.3;
         
@@ -122,8 +143,11 @@
             this.laserTimer = 0;
         }
         this.currentLaser.addChild(laserLine.laser);
+        laserLine.setColor("rgb("+Math.round(45 + this.laserOverheat/250*200)+","+Math.round(255-this.laserOverheat/250*150)+","+Math.round(255-this.laserOverheat/250*255)+")");
         this.currentCollision.addChild(laserLine.collision);
         this.laserTimer = laserDuration;
+
+        this.laserOverheat += 150;
         //DeepBeat.currentLevel.health.decrementHealth(1); // Lose health whenever shoot laser but earn equal amount back if hit enemy. This way user can't spam
     };
 
@@ -170,9 +194,17 @@
         var laser = new createjs.Shape();
         var laserCollisionBitmap;
 
+        var setColor = function(color) {
+            laser.graphics.clear();
+            if(width < 64) {
+                laser.graphics.beginFill(color).drawRoundRect(10, -gunSize/2 + 10, width - 20, height + gunSize - 20, 5);
+            } else {
+                laser.graphics.beginFill(color).drawRoundRect(-gunSize/2 + 10, 10, width + gunSize - 20, height-20, 5);
+            }
+        };
 
         if(width < 64) {
-            laser.graphics.beginFill("#2DFEFB").drawRoundRect(10, -gunSize/2 + 10, width - 20, height + gunSize - 20, 10);
+            laser.graphics.beginFill("#2DFEFB").drawRoundRect(10, -gunSize/2 + 10, width - 20, height + gunSize - 20, 5);
             laser.alpha = 0.5;
             laser.x = startX
             laser.y = startY
@@ -184,7 +216,7 @@
             laserCollisionBitmap.regX = 0;
             laserCollisionBitmap.regY = 0;
         } else {
-            laser.graphics.beginFill("#2DFEFB").drawRoundRect(-gunSize/2 + 10, 10, width + gunSize - 20, height-20, 10);
+            laser.graphics.beginFill("#2DFEFB").drawRoundRect(-gunSize/2 + 10, 10, width + gunSize - 20, height-20, 5);
             laser.alpha = 0.5;
             laser.x = startX
             laser.y = startY
@@ -199,7 +231,8 @@
 
         return {
             laser: laser,
-            collision: laserCollisionBitmap
+            collision: laserCollisionBitmap,
+            setColor: setColor
         };
     };
 
