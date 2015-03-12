@@ -113,6 +113,8 @@ DeepBeat = {
             this.currentLevel.end();
         }
         this.stage.removeAllChildren();
+        this.collisionTypes.Enemy = []; // reset all collisions
+        this.collisionFroms = [];
         this.stage.addChild(this.background);
         this.currentLevel = new level(this.stage);
     },

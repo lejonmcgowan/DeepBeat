@@ -91,7 +91,13 @@
                 DeepBeat.currentLevel.health.incrementHealth(1);
             }
         });
+
+        this.on("removed", function() {
+            this.currentLaser.removeAllChildren();
+            this.currentCollision.removeAllChildren();
+        });
     }
+
     var p = createjs.extend(Gun, createjs.Container);
     window.Gun = createjs.promote(Gun, "Container")
 
