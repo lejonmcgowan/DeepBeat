@@ -3,6 +3,7 @@
     var Level = function(stage) {
         this.stage = stage;
         this.lastTime = 0;
+
     };
 
     Level.prototype = {
@@ -138,6 +139,7 @@
     window.DeepBeatLevels.MainMenu = function(stage) {
         DeepBeat.canvas.style.backgroundColor = "black";
         Level.apply(this, [stage]);
+        stage.addChild(new DialogBox("Use the Arrow keys to select a level. Press enter to start the level. eigarpigaernhi areuaeriou gaerpig hadpi rn grieaun gaerpiaepi ",640, 3));
         stage.addChild(new Menu([{
             text: "Play Game",
             level: window.DeepBeatLevels.Level1
