@@ -58,6 +58,9 @@
             this.explosions.push(this.explosion);
             this.explosionTimer = 2000;
             this.nextExplosion = 200;
+            
+            var sfx = createjs.Sound.play("explosionSFX");
+            //sfx.volume = 0.3;
         }
 
         //this.bar.graphics.clear();

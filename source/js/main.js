@@ -78,6 +78,7 @@ DeepBeat = {
             //{id: "bonusMusic", src: "audio/Faded_Zhu.mp3"},
             {id: "laserSFX", src: "audio/laser.mp3"},
             {id: "shipHitSFX", src: "audio/ship_hit.mp3"},
+            {id: "explosionSFX", src: "audio/explosion.mp3"},
             {id: "logo", src: "images/logo.png"}
         ];
         
@@ -96,7 +97,8 @@ DeepBeat = {
     },
     
     updateLoading: function() {
-        // TODO fancy ass 3D circle loader... maybe
+        // TODO loading percentage
+        //console.log(this.preload.progress);
     },
     doneLoading: function() {
 		// Remove loading message
