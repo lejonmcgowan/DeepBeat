@@ -87,6 +87,10 @@
             createjs.Sound.setMute(!createjs.Sound.getMute());
         });
 
+        DeepBeat.addKeyHandler(this, "keydown-esc", function() {
+            DeepBeat.setLevel(DeepBeatLevels.MainMenu);
+        });
+
         DeepBeat.addCollisionHandler(this, this.currentCollision, "Enemy", function(other) {
             if(this.laserTimer > 0) {
                 DeepBeat.addObject(new Explosion(other.x,other.y,25,150));

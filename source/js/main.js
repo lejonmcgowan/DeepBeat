@@ -76,7 +76,8 @@ DeepBeat = {
             //{id: "gun", src: "images/gun.png"},
             //{id: "enemy", src: "images/enemy.png"},
             //{id: "blackhole", src: "images/blackhole.png"},
-            {id: "laser", src: "audio/laser.mp3"}
+            {id: "laser", src: "audio/laser.mp3"},
+            {id: "logo", src: "images/logo.png"}
         ];
         
         this.preload = new createjs.LoadQueue(true, assetsPath);

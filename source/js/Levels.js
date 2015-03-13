@@ -141,6 +141,10 @@
     window.DeepBeatLevels = {};
 
     window.DeepBeatLevels.MainMenu = function(stage) {
+        var logo = new createjs.Bitmap(DeepBeat.preload.getResult("logo"));
+        stage.addChild(logo);
+        logo.x = 100;
+        logo.y = 50;
         DeepBeat.canvas.style.backgroundColor = "black";
         Level.apply(this, [stage]);
         stage.addChild(new DialogBox("Use the Arrow keys to select a level. Press enter to start the level.asfasdfadsfadsfasdfasdfasdfasdfasdfasdfasdfasdfadsfasdfasdfasdf adsfadsfadsf adsfasdf adsfads fadsf asdfasdf adsfadsf adsfadsfsadf sadfsadf adsfsadfads adsfasdfads fsadf adsfasdf adsfds fsdf adsfadsf adsfasdfasd f",640, 3));
@@ -232,6 +236,10 @@
         lostLevel: function() {
             DeepBeat.timeSurvived = Math.round(this.music.getPosition() / 1000);
             DeepBeat.setLevel(DeepBeatLevels.LoseMenu);
+        },
+
+        end: function() {
+            this.objects.removeAllChildren();
         }
     });
 
@@ -272,6 +280,10 @@
         lostLevel: function() {
             DeepBeat.timeSurvived = Math.round(this.music.getPosition() / 1000);
             DeepBeat.setLevel(DeepBeatLevels.LoseMenu);
+        },
+
+        end: function() {
+            this.objects.removeAllChildren();
         }
     });
 
