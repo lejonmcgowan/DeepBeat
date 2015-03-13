@@ -159,12 +159,25 @@
         Level.apply(this, [stage]);
         stage.addChild(new DialogBox("Use the Arrow keys to select a level. Press enter to start the level.asfasdfadsfadsfasdfasdfasdfasdfasdfasdfasdfasdfadsfasdfasdfasdf adsfadsfadsf adsfasdf adsfads fadsf asdfasdf adsfadsf adsfadsfsadf sadfsadf adsfsadfads adsfasdfads fsadf adsfasdf adsfds fsdf adsfadsf adsfasdfasd f",640, 3));
         stage.addChild(new Menu([{
+        /*
+            text: "Tutorial",
+            level: window.DeepBeatLevels.Tutorial
+        }, {
+        */
             text: "Level 1",
             level: window.DeepBeatLevels.Level1
         }, {
+        /*
             text: "Level 2",
             level: window.DeepBeatLevels.Level2
         }, {
+            text: "Level 3",
+            level: window.DeepBeatLevels.Level3
+        }, {
+            text: "Bonus",
+            level: window.DeepBeatLevels.Bonus
+        }, {
+        */
             text: "Credits",
             level: window.DeepBeatLevels.HelpMenu
         }]));
@@ -220,7 +233,7 @@
         text.y = 100;
         stage.addChild(text);
         
-        var songs = new createjs.Text("Level 1: Faded by Zhu\nLevel 2: Phazd by tobycreed", "24px Verdana", "#FFFFFF");
+        var songs = new createjs.Text("Level 1: Phazd by tobycreed\nLevel 2: Heaven by Envy\nLevel 3: Chaoz Fantasy by ParagonX9\nBonus: Faded by Zhu", "24px Verdana", "#FFFFFF");
         songs.maxWidth = 1000;
         songs.textAlign = "center";
         songs.textBaseline = "middle";
@@ -233,6 +246,63 @@
     function goToWinMenu(event) {
         DeepBeat.setLevel(DeepBeatLevels.WinMenu);
     }
+    
+    // Define tutorial level
+    window.DeepBeatLevels.Tutorial = function(stage) {
+        Level.apply(this, [stage]);
+        var lev = this;
+        this.health = new HealthBar();
+
+        this.objects = new createjs.Container();
+        this.objects.alpha = 0;
+        this.alphaDir = 1;
+        this.won = false;
+
+        this.objects.addChild(new Gun());
+        this.objects.addChild(new SpaceStation());
+
+        stage.addChild(this.objects);
+       
+        
+        stage.addChild(this.health);
+        this.music = createjs.Sound.play("tutorialMusic");
+        this.musicDone = function() {
+            lev.alphaDir = -1;
+        };
+        this.enemies = [];
+        
+        randomDesign(this.enemies);
+
+        this.enemies = sortEnemies(this.beatRate, this.enemies);
+    };
+
+    window.DeepBeatLevels.Tutorial.prototype = _.extend(new Level(), {
+        beatRate: bpmToBeatRate(127), // define the BPM of the song here
+        
+        tick: function() {
+            this.spawnEnemies();
+            if(this.objects.alpha < 1 && this.alphaDir == 1) {
+                this.objects.alpha += DeepBeat.dt / 1000;
+            }
+            if(this.alphaDir == -1) {
+                if(this.objects.alpha > 0) {
+                    this.objects.alpha -= DeepBeat.dt / 2000;
+                    this.music.setVolume(this.objects.alpha);
+                } else {
+                    goToWinMenu();
+                }
+            }
+        },
+
+        lostLevel: function() {
+            DeepBeat.timeSurvived = Math.round(this.music.getPosition() / 1000);
+            DeepBeat.setLevel(DeepBeatLevels.LoseMenu);
+        },
+
+        end: function() {
+            this.objects.removeAllChildren();
+        }
+    });
     
     // Define first level
     window.DeepBeatLevels.Level1 = function(stage) {
@@ -264,7 +334,7 @@
     };
 
     window.DeepBeatLevels.Level1.prototype = _.extend(new Level(), {
-        beatRate: bpmToBeatRate(125.27), // define the BPM of the song here
+        beatRate: bpmToBeatRate(165), // define the BPM of the song here
         
         tick: function() {
             this.spawnEnemies();
@@ -321,7 +391,121 @@
     };
 
     window.DeepBeatLevels.Level2.prototype = _.extend(new Level(), {
-        beatRate: bpmToBeatRate(165), // define the BPM of the song here
+        beatRate: bpmToBeatRate(150.5), // define the BPM of the song here
+        
+        tick: function() {
+            this.spawnEnemies();
+            if(this.objects.alpha < 1 && this.alphaDir == 1) {
+                this.objects.alpha += DeepBeat.dt / 1000;
+            }
+            if(this.alphaDir == -1) {
+                if(this.objects.alpha > 0) {
+                    this.objects.alpha -= DeepBeat.dt / 2000;
+                    this.music.setVolume(this.objects.alpha);
+                } else {
+                    goToWinMenu();
+                }
+            }
+        },
+
+        lostLevel: function() {
+            DeepBeat.timeSurvived = Math.round(this.music.getPosition() / 1000);
+            DeepBeat.setLevel(DeepBeatLevels.LoseMenu);
+        },
+
+        end: function() {
+            this.objects.removeAllChildren();
+        }
+    });    
+
+    // Define third level
+    window.DeepBeatLevels.Level3 = function(stage) {
+        Level.apply(this, [stage]);
+        var lev = this;
+        this.health = new HealthBar();
+
+        this.objects = new createjs.Container();
+        this.objects.alpha = 0;
+        this.alphaDir = 1;
+        this.won = false;
+
+        this.objects.addChild(new Gun());
+        this.objects.addChild(new SpaceStation());
+
+        stage.addChild(this.objects);
+       
+        
+        stage.addChild(this.health);
+        this.music = createjs.Sound.play("level3Music");
+        this.musicDone = function() {
+            lev.alphaDir = -1;
+        };
+        this.enemies = [];
+        
+        randomDesign(this.enemies);
+
+        this.enemies = sortEnemies(this.beatRate, this.enemies);
+    };
+
+    window.DeepBeatLevels.Level3.prototype = _.extend(new Level(), {
+        beatRate: bpmToBeatRate(162.32), // define the BPM of the song here
+        
+        tick: function() {
+            this.spawnEnemies();
+            if(this.objects.alpha < 1 && this.alphaDir == 1) {
+                this.objects.alpha += DeepBeat.dt / 1000;
+            }
+            if(this.alphaDir == -1) {
+                if(this.objects.alpha > 0) {
+                    this.objects.alpha -= DeepBeat.dt / 2000;
+                    this.music.setVolume(this.objects.alpha);
+                } else {
+                    goToWinMenu();
+                }
+            }
+        },
+
+        lostLevel: function() {
+            DeepBeat.timeSurvived = Math.round(this.music.getPosition() / 1000);
+            DeepBeat.setLevel(DeepBeatLevels.LoseMenu);
+        },
+
+        end: function() {
+            this.objects.removeAllChildren();
+        }
+    });
+    
+    // Define bonus level
+    window.DeepBeatLevels.Bonus = function(stage) {
+        Level.apply(this, [stage]);
+        var lev = this;
+        this.health = new HealthBar();
+
+        this.objects = new createjs.Container();
+        this.objects.alpha = 0;
+        this.alphaDir = 1;
+        this.won = false;
+
+        this.objects.addChild(new Gun());
+        this.objects.addChild(new SpaceStation());
+
+        stage.addChild(this.objects);
+       
+        
+        stage.addChild(this.health);
+        this.music = createjs.Sound.play("bonusMusic");
+        this.musicDone = function() {
+            lev.alphaDir = -1;
+        };
+        this.enemies = [];
+        
+        randomDesign(this.enemies);
+
+        this.enemies = sortEnemies(this.beatRate, this.enemies);
+    };
+
+    window.DeepBeatLevels.Bonus.prototype = _.extend(new Level(), {
+        beatRate: bpmToBeatRate(125.27), // define the BPM of the song here
         
         tick: function() {
             this.spawnEnemies();

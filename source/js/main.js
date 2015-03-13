@@ -71,8 +71,11 @@ DeepBeat = {
         // Preload the following assets
         var assetsPath = "../assets/";
         this.manifest = [ // Be sure to define bpm of song for each level in Level.js
-            {id: "level1Music", src: "audio/Faded_Zhu.mp3"},
-            {id: "level2Music", src: "audio/Phazd_tobycreed.mp3"},
+            //{id: "tutorialMusic", src: "audio/tutorial.mp3"},
+            {id: "level1Music", src: "audio/Phazd_tobycreed.mp3"},
+            //{id: "level2Music", src: "audio/Heaven_Envy.mp3"},
+            //{id: "level3Music", src: "audio/ChaozFantasy_ParagonX9.mp3"},
+            //{id: "bonusMusic", src: "audio/Faded_Zhu.mp3"},
             {id: "laserSFX", src: "audio/laser.mp3"},
             {id: "shipHitSFX", src: "audio/ship_hit.mp3"},
             {id: "logo", src: "images/logo.png"}
