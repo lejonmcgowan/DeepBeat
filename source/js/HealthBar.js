@@ -52,7 +52,7 @@
 
     p.setHealth = function(health) {
         this.health = health;
-        if(this.health <= 0 && !this.explosion) {
+        if(this.health <= 0 && !this.explosion && !DeepBeat.currentLevel.won) {
             this.explosion = new Explosion(DeepBeat.windowWidth/2,DeepBeat.windowHeight/2,DeepBeat.windowWidth,2000);
             DeepBeat.addObject(this.explosion);
             this.explosions.push(this.explosion);
