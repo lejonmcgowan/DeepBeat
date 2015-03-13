@@ -1,5 +1,5 @@
 (function (window) {
-    var size = 20;
+    var origSize = 20;
 
     function Enemy(params) {
         this.Container_constructor();
@@ -7,17 +7,17 @@
         this.shape = new createjs.Shape();
         this.addChild(this.shape);
 
-        var collision = new createjs.Bitmap(new Image(size, size));
-        collision.regX = size / 2;
-        collision.regY = size / 2;
+        var collision = new createjs.Bitmap(new Image(origSize, origSize));
+        collision.regX = origSize / 2;
+        collision.regY = origSize / 2;
         collision.x = 0;
         collision.y = 0;
         this.addChild(collision);
         //this.addChild(new createjs.Bitmap(DeepBeat.preload.getResult("enemy")));
 
         this.on("tick", p.tick);
-        this.xReg = size/2;
-        this.yReg = size/2;
+        this.xReg = origSize/2;
+        this.yReg = origSize/2;
         this.xPos = params[0];
         this.yPos = params[1];
         this.xDir = params[2];
@@ -60,6 +60,8 @@
             this.yPos += DeepBeat.windowHeight/2;
             this.angle -= 0.005*this.speed*DeepBeat.dt;
         }
+
+        var size = origSize;
         
         this.x = SSDistortX(this.xPos, this.yPos);
         this.y = SSDistortY(this.xPos, this.yPos);

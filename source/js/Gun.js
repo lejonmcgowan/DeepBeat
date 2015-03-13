@@ -57,6 +57,7 @@
         this.laserTimer = 0;
         this.laserOverheat = 0;
         this.laserOverheatTimer = 0;
+        this.laserOverheatColor = 0;
 
         this.currentLaser = new createjs.Container();
         this.currentCollision = new createjs.Container();
@@ -122,12 +123,31 @@
         } else {
             this.laserOverheatTimer = 0;
         }
+
+        this.laserOverheatColor += (this.laserOverheat - this.laserOverheatColor)/400*DeepBeat.dt;
+
+        var mult = (DeepBeat.currentLevel.getTimeToBeat ? DeepBeat.currentLevel.beatRate*2/(DeepBeat.currentLevel.beatRate+DeepBeat.currentLevel.getTimeToBeat()) : 1);
+        mult = ((mult - 1) * 0.5 * (250 - this.laserOverheatColor)/250) + 1;
+        var color1 = "rgb("+Math.round(45 + this.laserOverheatColor/250*200)+","+Math.round(190-this.laserOverheatColor/250*100)+","+Math.round(255-this.laserOverheatColor/250*255)+")";
+        var color2 = "rgb("+Math.round(45 + this.laserOverheatColor/250*200)+","+Math.round(255-this.laserOverheatColor/250*150)+","+Math.round(255-this.laserOverheatColor/250*255)+")";
+
+        this.laserNodes[0][0].shape.scaleX = mult;
+        this.laserNodes[0][0].shape.scaleY = mult;
+        this.laserNodes[0][0].setColor(color1, color2);
+        this.laserNodes[1][0].shape.scaleX = mult;
+        this.laserNodes[1][0].shape.scaleY = mult;
+        this.laserNodes[1][0].setColor(color1, color2);
+        this.laserNodes[0][1].shape.scaleX = mult;
+        this.laserNodes[0][1].shape.scaleY = mult;
+        this.laserNodes[0][1].setColor(color1, color2);
+        this.laserNodes[1][1].shape.scaleX = mult;
+        this.laserNodes[1][1].shape.scaleY = mult;
+        this.laserNodes[1][1].setColor(color1, color2);
     }
 
     p.updateLaser = function(laserLine) {
         if(this.laserOverheat > 250) {
             this.laserOverheatTimer = 1500;
-            this.laserOverheat = 0;
         }
         if(this.laserOverheatTimer > 0) {
             return;
@@ -165,7 +185,18 @@
         shape.graphics.beginFill("#2DFEFB");
         shape.graphics.drawCircle(0,0,gunSize/2 - 10);
         this.addChild(shape);
-        return {x: x, y: y, shape: shape};
+        
+        var setColor = function(color1, color2) {
+            shape.graphics.clear();
+            shape.graphics.beginFill(color1);
+            shape.graphics.beginStroke(color2);
+            shape.graphics.setStrokeStyle(2);
+            shape.graphics.drawCircle(0,0,gunSize/2 - 5);
+            shape.graphics.beginFill(color2);
+            shape.graphics.drawCircle(0,0,gunSize/2 - 10);
+        };
+
+        return {x: x, y: y, shape: shape, setColor: setColor};
     };
 
     p.constructLaserLines = function(laserNodes) {

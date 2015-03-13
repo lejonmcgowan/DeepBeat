@@ -24,6 +24,10 @@
         music: null,
         beatRate: 1000,
 
+        getTimeToBeat: function() {
+            return Math.min(this.music.getPosition() % this.beatRate, this.beatRate - this.music.getPosition() % this.beatRate);
+        },
+
         tick: function() {},
 
         end: function() {},
