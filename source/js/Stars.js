@@ -12,7 +12,7 @@
             this.addChild(star);
             this.stars.push(star);
             star.alpha = Math.random();
-            star.sd = Math.random() + 1;
+            star.sd = Math.random() * 2 + 1;
             star.sx = Math.random() * DeepBeat.windowWidth;
             star.sy = Math.random() * DeepBeat.windowHeight;
             this.time = 0;
@@ -28,6 +28,7 @@
         this.time += DeepBeat.dt / 5000;
         var x = Math.cos(this.time) * 100;
         var y = Math.sin(this.time) * 100;
+        this.scaleX = this.scaleY = (2 + 0.5*Math.cos(this.time/10))/2;
 
         for(var i = 0; i < this.stars.length; i++) {
             this.stars[i].x = (this.stars[i].sd * x) + this.stars[i].sx;

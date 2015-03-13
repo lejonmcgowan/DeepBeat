@@ -33,9 +33,24 @@
     window.Enemy = createjs.promote(Enemy, "Container");
 
     p.tick = function (event) {
+
+        var size = origSize;
+        this.x = SSDistortX(this.xPos, this.yPos);
+        this.y = SSDistortY(this.xPos, this.yPos);
+
         if (this.type == DeepBeat.enemyType.linear) {
             this.xPos += this.xDir * this.speed * DeepBeat.dt;
             this.yPos += this.yDir * this.speed * DeepBeat.dt;
+
+            this.shape.graphics.clear();
+            this.shape.graphics.beginFill("#770000").beginStroke("#cc0000").setStrokeStyle(2);
+            this.shape.graphics.moveTo(SSDistortX(this.xPos - size/2, this.yPos - size/2) - this.x, SSDistortY(this.xPos - size/2, this.yPos - size/2) - this.y);
+            this.shape.graphics.lineTo(SSDistortX(this.xPos - size/2, this.yPos + size/2) - this.x, SSDistortY(this.xPos - size/2, this.yPos + size/2) - this.y);
+            this.shape.graphics.lineTo(SSDistortX(this.xPos + size/2, this.yPos + size/2) - this.x, SSDistortY(this.xPos + size/2, this.yPos + size/2) - this.y);
+            this.shape.graphics.lineTo(SSDistortX(this.xPos + size/2, this.yPos - size/2) - this.x, SSDistortY(this.xPos + size/2, this.yPos - size/2) - this.y);
+            this.shape.graphics.lineTo(SSDistortX(this.xPos - size/2, this.yPos - size/2) - this.x, SSDistortY(this.xPos - size/2, this.yPos - size/2) - this.y);
+            this.shape.graphics.endFill();
+
         } else if (this.type == DeepBeat.enemyType.wave) {
             if (this.xDir == 0) {
                 this.xPos = DeepBeat.windowWidth/2 + 50 * Math.cos(this.speed/8 * this.yPos);
@@ -45,6 +60,16 @@
                 this.xPos += this.xDir * this.speed * DeepBeat.dt;
                 this.yPos = DeepBeat.windowHeight/2 + 50 * Math.cos(this.speed/8 * this.xPos);
             }
+
+            this.shape.graphics.clear();
+            this.shape.graphics.beginFill("#777700").beginStroke("#cccc00").setStrokeStyle(2);
+            this.shape.graphics.drawEllipse(
+                SSDistortX(this.xPos - size/1.5, this.yPos - size/1.5) - this.x,
+                SSDistortY(this.xPos - size/1.5, this.yPos - size/1.5) - this.y,
+                SSDistortX(this.xPos + size/1.5, this.yPos + size/1.5) - SSDistortX(this.xPos - size/1.5, this.yPos - size/1.5),
+                SSDistortY(this.xPos + size/1.5, this.yPos + size/1.5) - SSDistortY(this.xPos - size/1.5, this.yPos - size/1.5))
+
+
         } else if (this.type == DeepBeat.enemyType.spiral) {
             var x = (200 * Math.cos(this.angle) * Math.pow(Math.E, 1 * this.angle));
             var y = (200 * Math.sin(this.angle) * Math.pow(Math.E, 1 * this.angle));
@@ -59,20 +84,17 @@
             this.xPos += DeepBeat.windowWidth/2;
             this.yPos += DeepBeat.windowHeight/2;
             this.angle -= 0.005*this.speed*DeepBeat.dt;
-        }
 
-        var size = origSize;
-        
-        this.x = SSDistortX(this.xPos, this.yPos);
-        this.y = SSDistortY(this.xPos, this.yPos);
-        this.shape.graphics.clear();
-        this.shape.graphics.beginFill("#770000").beginStroke("#cc0000");
-        this.shape.graphics.moveTo(SSDistortX(this.xPos - size/2, this.yPos - size/2) - this.x, SSDistortY(this.xPos - size/2, this.yPos - size/2) - this.y);
-        this.shape.graphics.lineTo(SSDistortX(this.xPos - size/2, this.yPos + size/2) - this.x, SSDistortY(this.xPos - size/2, this.yPos + size/2) - this.y);
-        this.shape.graphics.lineTo(SSDistortX(this.xPos + size/2, this.yPos + size/2) - this.x, SSDistortY(this.xPos + size/2, this.yPos + size/2) - this.y);
-        this.shape.graphics.lineTo(SSDistortX(this.xPos + size/2, this.yPos - size/2) - this.x, SSDistortY(this.xPos + size/2, this.yPos - size/2) - this.y);
-        this.shape.graphics.lineTo(SSDistortX(this.xPos - size/2, this.yPos - size/2) - this.x, SSDistortY(this.xPos - size/2, this.yPos - size/2) - this.y);
-        this.shape.graphics.endFill(); // draw the last line segment back to the start point.
+
+            this.shape.graphics.clear();
+            this.shape.graphics.beginFill("#774400").beginStroke("#cc7700").setStrokeStyle(2);
+            this.shape.graphics.moveTo(SSDistortX(this.xPos, this.yPos - size/1.5) - this.x, SSDistortY(this.xPos, this.yPos - size/1.5) - this.y);
+            this.shape.graphics.lineTo(SSDistortX(this.xPos - size/1.5, this.yPos) - this.x, SSDistortY(this.xPos - size/1.5, this.yPos) - this.y);
+            this.shape.graphics.lineTo(SSDistortX(this.xPos, this.yPos + size/1.5) - this.x, SSDistortY(this.xPos, this.yPos + size/1.5) - this.y);
+            this.shape.graphics.lineTo(SSDistortX(this.xPos + size/1.5, this.yPos) - this.x, SSDistortY(this.xPos + size/1.5, this.yPos) - this.y);
+            this.shape.graphics.lineTo(SSDistortX(this.xPos, this.yPos - size/1.5) - this.x, SSDistortY(this.xPos, this.yPos - size/1.5) - this.y);
+            this.shape.graphics.endFill();
+        }
     };
 
     p.timeToSound = function(params) {
