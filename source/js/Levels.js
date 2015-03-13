@@ -159,15 +159,12 @@
         Level.apply(this, [stage]);
         stage.addChild(new DialogBox("Use the Arrow keys to select a level. Press enter to start the level.asfasdfadsfadsfasdfasdfasdfasdfasdfasdfasdfasdfadsfasdfasdfasdf adsfadsfadsf adsfasdf adsfads fadsf asdfasdf adsfadsf adsfadsfsadf sadfsadf adsfsadfads adsfasdfads fsadf adsfasdf adsfds fsdf adsfadsf adsfasdfasd f",640, 3));
         stage.addChild(new Menu([{
-        /*
             text: "Tutorial",
             level: window.DeepBeatLevels.Tutorial
         }, {
-        */
             text: "Level 1",
             level: window.DeepBeatLevels.Level1
         }, {
-        /*
             text: "Level 2",
             level: window.DeepBeatLevels.Level2
         }, {
@@ -177,7 +174,6 @@
             text: "Bonus",
             level: window.DeepBeatLevels.Bonus
         }, {
-        */
             text: "Credits",
             level: window.DeepBeatLevels.HelpMenu
         }]));
