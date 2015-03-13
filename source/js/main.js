@@ -59,7 +59,7 @@ DeepBeat = {
         this.keysEventDispatcher = new createjs.EventDispatcher();
         
         // Loading message
-		this.messageField = new createjs.Text("Loading", "24px Verdana", "#FFFFFF");
+		this.messageField = new createjs.Text("Loading...", "24px Verdana", "#FFFFFF");
 		this.messageField.maxWidth = 1000;
 		this.messageField.textAlign = "center";
 		this.messageField.textBaseline = "middle";
@@ -97,8 +97,9 @@ DeepBeat = {
     },
     
     updateLoading: function() {
-        // TODO loading percentage
-        //console.log(this.preload.progress);
+        var percentage = Math.round(this.preload.progress * 100);
+        this.messageField.text = "Loading... "+percentage+"%";
+        this.stage.update();
     },
     doneLoading: function() {
 		// Remove loading message
