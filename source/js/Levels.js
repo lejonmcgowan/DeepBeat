@@ -219,6 +219,14 @@
         text.x = DeepBeat.windowWidth / 2;
         text.y = 100;
         stage.addChild(text);
+        
+        var songs = new createjs.Text("Level 1: Faded by Zhu\nLevel 2: Phazd by tobycreed", "24px Verdana", "#FFFFFF");
+        songs.maxWidth = 1000;
+        songs.textAlign = "center";
+        songs.textBaseline = "middle";
+        songs.x = DeepBeat.windowWidth / 2;
+        songs.y = 420;
+        stage.addChild(songs);
     };
     window.DeepBeatLevels.HelpMenu.prototype = _.extend(new Level(), {});
 
@@ -256,7 +264,7 @@
     };
 
     window.DeepBeatLevels.Level1.prototype = _.extend(new Level(), {
-        beatRate: bpmToBeatRate(165), // define the BPM of the song here
+        beatRate: bpmToBeatRate(125.27), // define the BPM of the song here
         
         tick: function() {
             this.spawnEnemies();
@@ -313,7 +321,7 @@
     };
 
     window.DeepBeatLevels.Level2.prototype = _.extend(new Level(), {
-        beatRate: bpmToBeatRate(120), // define the BPM of the song here
+        beatRate: bpmToBeatRate(165), // define the BPM of the song here
         
         tick: function() {
             this.spawnEnemies();

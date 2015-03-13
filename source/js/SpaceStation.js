@@ -158,6 +158,9 @@
         DeepBeat.addObject(new Explosion(other.x,other.y,40,300));
         DeepBeat.removeObject(other);
         DeepBeat.currentLevel.health.decrementHealth(10);
+        
+        var sfx = createjs.Sound.play("shipHitSFX");
+        sfx.volume = 1.0;
     }
 
     window.SSDistortX = function(x, y) {

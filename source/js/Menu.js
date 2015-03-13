@@ -23,9 +23,13 @@
         this.setCurrentItem(0);
 
         DeepBeat.addKeyHandler(this, "keydown-up", function() {
+            var sfx = createjs.Sound.play("laserSFX");
+            sfx.volume = 0.3;
             this.setCurrentItem(this.currentItem - 1);
         });
         DeepBeat.addKeyHandler(this, "keydown-down", function() {
+            var sfx = createjs.Sound.play("laserSFX");
+            sfx.volume = 0.3;
             this.setCurrentItem(this.currentItem + 1);
         });
         DeepBeat.addKeyHandler(this, "keydown-space", function() {

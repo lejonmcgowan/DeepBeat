@@ -157,7 +157,7 @@
             return;
         }
 
-        var sfx = createjs.Sound.play("laser");
+        var sfx = createjs.Sound.play("laserSFX");
         sfx.volume = 0.3;
         
         // Place laser in new direction
