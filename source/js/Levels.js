@@ -151,7 +151,7 @@
             text: "Level 2",
             level: window.DeepBeatLevels.Level2
         }, {
-            text: "Help",
+            text: "Credits",
             level: window.DeepBeatLevels.HelpMenu
         }]));
     };
@@ -161,7 +161,8 @@
         Level.apply(this, [stage]);
         stage.addChild(new Menu([{
             text: "Back to Main Menu",
-            level: window.DeepBeatLevels.MainMenu
+            level: window.DeepBeatLevels.MainMenu,
+            esc: true
         }]));
         var text = new createjs.Text("The space station collapsed.\n\nYou survived for " + Math.floor(DeepBeat.timeSurvived/60) + " minutes and "+Math.round(DeepBeat.timeSurvived%60)+" seconds.", "24px Verdana", "#FFFFFF");
         text.maxWidth = 1000;
@@ -176,10 +177,11 @@
     window.DeepBeatLevels.HelpMenu = function(stage) {
         Level.apply(this, [stage]);
         stage.addChild(new Menu([{
-            text: "Back",
-            level: window.DeepBeatLevels.MainMenu
+            text: "Back to Main Menu",
+            level: window.DeepBeatLevels.MainMenu,
+            esc: true
         }]));
-        var text = new createjs.Text("Use the arrow keys to shoot your laser!\n\nShoot objects before they damage\nyour space station!\n\n\n\n\n\n\n\n\n\nCredits\n\nDaniel Johnson\nLeJon McGowan\nChris Williams", "24px Verdana", "#FFFFFF");
+        var text = new createjs.Text("Credits\n\nDaniel Johnson\nLeJon McGowan\nChris Williams", "24px Verdana", "#FFFFFF");
         text.maxWidth = 1000;
         text.textAlign = "center";
         text.textBaseline = "middle";

@@ -40,7 +40,8 @@ DeepBeat = {
         "68": "right",
         "83": "down",
         "109": "mute",
-        "77": "mute"
+        "77": "mute",
+        "27": "esc"
     },
 
     init: function(level) {

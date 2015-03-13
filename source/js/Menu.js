@@ -5,6 +5,7 @@
 
         this.menuItems = [];
         this.currentItem = 0;
+        this.esc = -1;
 
         for(var i = 0; i < menuItems.length; i++) {
             this.menuItems.push({
@@ -14,6 +15,9 @@
             this.menuItems[i].text.x = DeepBeat.windowWidth/2 - this.menuItems[i].text.getMeasuredWidth()/2;
             this.menuItems[i].text.y = DeepBeat.windowHeight/2 - menuItems.length * 25 - this.menuItems[i].text.getMeasuredHeight()/2 + i * 50;
             this.addChild(this.menuItems[i].text);
+            if(menuItems[i].esc) {
+                this.esc = i;
+            }
         }
 
         this.setCurrentItem(0);
@@ -29,6 +33,10 @@
         });
         DeepBeat.addKeyHandler(this, "keydown-enter", function() {
             DeepBeat.setLevel(this.menuItems[this.currentItem].level);
+        });
+        DeepBeat.addKeyHandler(this, "keydown-esc", function() {
+            if(this.esc == -1) return;
+            DeepBeat.setLevel(this.menuItems[this.esc].level);
         });
     }
 
