@@ -118,9 +118,9 @@
                 this.xPos += 2 * Math.sin(this.speed/16 * DeepBeat.time);
             }
 
-            // TODO Draw as purple upside-down triangle
+            // Draw as green upside-down triangle
             this.shape.graphics.clear();
-            this.shape.graphics.beginFill("#440077").beginStroke("#7700cc").setStrokeStyle(2);
+            this.shape.graphics.beginFill("#007700").beginStroke("#00cc00").setStrokeStyle(2);
             this.shape.graphics.moveTo(SSDistortX(this.xPos - size/1.5, this.yPos - size/1.5) - this.x, SSDistortY(this.xPos - size/1.5, this.yPos - size/1.5) - this.y);
             this.shape.graphics.lineTo(SSDistortX(this.xPos, this.yPos + size/1.5) - this.x, SSDistortY(this.xPos, this.yPos + size/1.5) - this.y);
             this.shape.graphics.lineTo(SSDistortX(this.xPos + size/1.5, this.yPos - size/1.5) - this.x, SSDistortY(this.xPos + size/1.5, this.yPos - size/1.5) - this.y);
