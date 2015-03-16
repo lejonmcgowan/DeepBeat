@@ -103,10 +103,10 @@
             // Draw as orange triangle
             this.shape.graphics.clear();
             this.shape.graphics.beginFill("#774400").beginStroke("#cc7700").setStrokeStyle(2);
-            this.shape.graphics.moveTo(SSDistortX(this.xPos - size/2, this.yPos + size/2) - this.x, SSDistortY(this.xPos - size/2, this.yPos + size/2) - this.y);
-            this.shape.graphics.lineTo(SSDistortX(this.xPos, this.yPos - size/2) - this.x, SSDistortY(this.xPos, this.yPos - size/2) - this.y);
-            this.shape.graphics.lineTo(SSDistortX(this.xPos + size/2, this.yPos + size/2) - this.x, SSDistortY(this.xPos + size/2, this.yPos + size/2) - this.y);
-            this.shape.graphics.lineTo(SSDistortX(this.xPos - size/2, this.yPos + size/2) - this.x, SSDistortY(this.xPos - size/2, this.yPos + size/2) - this.y);
+            this.shape.graphics.moveTo(SSDistortX(this.xPos - size/1.5, this.yPos + size/1.5) - this.x, SSDistortY(this.xPos - size/1.5, this.yPos + size/1.5) - this.y);
+            this.shape.graphics.lineTo(SSDistortX(this.xPos, this.yPos - size/1.5) - this.x, SSDistortY(this.xPos, this.yPos - size/1.5) - this.y);
+            this.shape.graphics.lineTo(SSDistortX(this.xPos + size/1.5, this.yPos + size/1.5) - this.x, SSDistortY(this.xPos + size/1.5, this.yPos + size/1.5) - this.y);
+            this.shape.graphics.lineTo(SSDistortX(this.xPos - size/1.5, this.yPos + size/1.5) - this.x, SSDistortY(this.xPos - size/1.5, this.yPos + size/1.5) - this.y);
             this.shape.graphics.endFill();
         } else if (this.type == DeepBeat.enemyType.creeper) {
             this.xPos += this.xDir * this.speed * DeepBeat.dt;
@@ -121,10 +121,10 @@
             // TODO Draw as purple upside-down triangle
             this.shape.graphics.clear();
             this.shape.graphics.beginFill("#440077").beginStroke("#7700cc").setStrokeStyle(2);
-            this.shape.graphics.moveTo(SSDistortX(this.xPos - size/2, this.yPos - size/2) - this.x, SSDistortY(this.xPos - size/2, this.yPos - size/2) - this.y);
-            this.shape.graphics.lineTo(SSDistortX(this.xPos, this.yPos + size/2) - this.x, SSDistortY(this.xPos, this.yPos + size/2) - this.y);
-            this.shape.graphics.lineTo(SSDistortX(this.xPos + size/2, this.yPos - size/2) - this.x, SSDistortY(this.xPos + size/2, this.yPos - size/2) - this.y);
-            this.shape.graphics.lineTo(SSDistortX(this.xPos - size/2, this.yPos - size/2) - this.x, SSDistortY(this.xPos - size/2, this.yPos - size/2) - this.y);
+            this.shape.graphics.moveTo(SSDistortX(this.xPos - size/1.5, this.yPos - size/1.5) - this.x, SSDistortY(this.xPos - size/1.5, this.yPos - size/1.5) - this.y);
+            this.shape.graphics.lineTo(SSDistortX(this.xPos, this.yPos + size/1.5) - this.x, SSDistortY(this.xPos, this.yPos + size/1.5) - this.y);
+            this.shape.graphics.lineTo(SSDistortX(this.xPos + size/1.5, this.yPos - size/1.5) - this.x, SSDistortY(this.xPos + size/1.5, this.yPos - size/1.5) - this.y);
+            this.shape.graphics.lineTo(SSDistortX(this.xPos - size/1.5, this.yPos - size/1.5) - this.x, SSDistortY(this.xPos - size/1.5, this.yPos - size/1.5) - this.y);
             this.shape.graphics.endFill();
         }
     };
