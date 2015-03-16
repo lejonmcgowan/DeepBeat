@@ -29,6 +29,7 @@ DeepBeat = {
     collisionFroms: [],
 
     dt: 0,
+    time: 0,
 
     KEYCODES: {
         "13": "enter",

@@ -109,13 +109,18 @@
             this.shape.graphics.lineTo(SSDistortX(this.xPos - size/2, this.yPos + size/2) - this.x, SSDistortY(this.xPos - size/2, this.yPos + size/2) - this.y);
             this.shape.graphics.endFill();
         } else if (this.type == DeepBeat.enemyType.creeper) {
-            // TODO
             this.xPos += this.xDir * this.speed * DeepBeat.dt;
             this.yPos += this.yDir * this.speed * DeepBeat.dt;
+            if (this.xDir == 0) {
+                this.yPos += 2 * Math.sin(this.speed/16 * DeepBeat.time);
+            }
+            if (this.yDir == 0) {
+                this.xPos += 2 * Math.sin(this.speed/16 * DeepBeat.time);
+            }
 
             // TODO Draw as purple upside-down triangle
             this.shape.graphics.clear();
-            this.shape.graphics.beginFill("#774400").beginStroke("#cc7700").setStrokeStyle(2);
+            this.shape.graphics.beginFill("#440077").beginStroke("#7700cc").setStrokeStyle(2);
             this.shape.graphics.moveTo(SSDistortX(this.xPos - size/2, this.yPos - size/2) - this.x, SSDistortY(this.xPos - size/2, this.yPos - size/2) - this.y);
             this.shape.graphics.lineTo(SSDistortX(this.xPos - size/2, this.yPos + size/2) - this.x, SSDistortY(this.xPos - size/2, this.yPos + size/2) - this.y);
             this.shape.graphics.lineTo(SSDistortX(this.xPos + size/2, this.yPos + size/2) - this.x, SSDistortY(this.xPos + size/2, this.yPos + size/2) - this.y);

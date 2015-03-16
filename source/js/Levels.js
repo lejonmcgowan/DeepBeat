@@ -10,6 +10,7 @@
         spawnEnemies: function() {
 
             var position = this.music.getPosition();
+            DeepBeat.time = position;
             DeepBeat.dt = position - this.lastTime;
             if(!DeepBeat.dt || DeepBeat.dt > 100) {
                 DeepBeat.dt = 17;
@@ -114,17 +115,12 @@
         var type;
         
         this.changeDirs = function() {
-            if (type == DeepBeat.enemyType.linear) {
-                xDir = randBool() ? (randBool() ? -1 : 1) : 0;
-                yDir = xDir == 0 ? (randBool() ? -1 : 1) : 0;
-                xPos = xDir == 0 ? DeepBeat.windowWidth/2 : (xDir == 1 ? 0 : DeepBeat.windowWidth);
-                yPos = yDir == 0 ? DeepBeat.windowHeight/2 : (yDir == 1 ? 0 : DeepBeat.windowHeight);
-            } else if (type == DeepBeat.enemyType.diagonal) {
-                xDir = randBool() ? (randBool() ? -1 : 1) : 0;
-                yDir = xDir == 0 ? (randBool() ? -1 : 1) : 0;
-                xPos = xDir == 0 ? DeepBeat.windowWidth/2 : (xDir == 1 ? 0 : DeepBeat.windowWidth);
-                yPos = yDir == 0 ? DeepBeat.windowHeight/2 : (yDir == 1 ? 0 : DeepBeat.windowHeight);
-                
+            xDir = randBool() ? (randBool() ? -1 : 1) : 0;
+            yDir = xDir == 0 ? (randBool() ? -1 : 1) : 0;
+            xPos = xDir == 0 ? DeepBeat.windowWidth/2 : (xDir == 1 ? 0 : DeepBeat.windowWidth);
+            yPos = yDir == 0 ? DeepBeat.windowHeight/2 : (yDir == 1 ? 0 : DeepBeat.windowHeight);
+            
+            if (type == DeepBeat.enemyType.diagonal) {
                 if (xDir == 0) {
                     xDir = randBool() ? 0.3 : -0.3;
                     xPos = (xDir > 0) ? DeepBeat.windowWidth/3 : 2*DeepBeat.windowWidth/3;
@@ -142,7 +138,7 @@
                 type = Math.random()*15<phrase
                     ? (randBool() ? DeepBeat.enemyType.spiral : DeepBeat.enemyType.wave)
                     : (Math.random()*8<phrase ? DeepBeat.enemyType.diagonal : DeepBeat.enemyType.linear);
-                type = DeepBeat.enemyType.diagonal;
+type = DeepBeat.enemyType.creeper;
                 var beatIncr = Math.random()*6<phrase ? ((randBool() && phrase>8) ? 0.5 : 1) : 2;
                 changeDirs();
                 
