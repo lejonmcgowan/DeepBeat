@@ -112,10 +112,10 @@
             this.xPos += this.xDir * this.speed * DeepBeat.dt;
             this.yPos += this.yDir * this.speed * DeepBeat.dt;
             if (this.xDir == 0) {
-                this.yPos += 2 * Math.sin(this.speed/16 * DeepBeat.time);
+                this.yPos += 4 * Math.sin(this.speed/16 * DeepBeat.time);
             }
             if (this.yDir == 0) {
-                this.xPos += 2 * Math.sin(this.speed/16 * DeepBeat.time);
+                this.xPos += 4 * Math.sin(this.speed/16 * DeepBeat.time);
             }
 
             // Draw as green upside-down triangle
