@@ -21,7 +21,9 @@ DeepBeat = {
     enemyType: { // How to enum: http://stackoverflow.com/questions/287903/enums-in-javascript
         linear: 0,
         wave: 1,
-        spiral: 2
+        spiral: 2,
+        diagonal: 3,
+        creeper: 4
     },
 
     collisionFroms: [],
@@ -72,8 +74,8 @@ DeepBeat = {
         var assetsPath = "../assets/";
         this.manifest = [ // Be sure to define bpm of song for each level in Level.js
             {id: "tutorialMusic", src: "audio/tutorial.mp3"},
-            /*
             {id: "level1Music", src: "audio/Phazd_tobycreed.mp3"},
+            /*
             {id: "level2Music", src: "audio/Heaven_Envy.mp3"},
             {id: "level3Music", src: "audio/ChaozFantasy_ParagonX9.mp3"},
             {id: "bonusMusic", src: "audio/Faded_Zhu.mp3"},

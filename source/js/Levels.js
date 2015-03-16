@@ -106,28 +106,40 @@
     }
     
     // Randomly generate enemies
-    var randomDesign = function(enemies) {
+    var randomDesign = function(enemies, difficulty) {
         var xDir;
         var yDir;
         var xPos;
         var yPos;
+        var type;
         
-        this.changeDirs = function(pxDir, pyDir, pxPos, pyPos) {
-            xDir = pxDir == 0 ? (randBool() ? (randBool() ? -1 : 1) : 0) : pxDir;
-            yDir = pyDir == 0 ? (xDir == 0 ? (randBool() ? -1 : 1) : 0) : pyDir;
-            xPos = xDir == 0 ? DeepBeat.windowWidth/2 : (xDir == 1 ? 0 : (xDir == -1 ? DeepBeat.windowWidth : pxPos));
-            yPos = yDir == 0 ? DeepBeat.windowHeight/2 : (yDir == 1 ? 0 : (yDir == -1 ? DeepBeat.windowHeight : pyPos));
+        this.changeDirs = function() {
+            if (type == DeepBeat.enemyType.linear) {
+                xDir = randBool() ? (randBool() ? -1 : 1) : 0;
+                yDir = xDir == 0 ? (randBool() ? -1 : 1) : 0;
+                xPos = xDir == 0 ? DeepBeat.windowWidth/2 : (xDir == 1 ? 0 : DeepBeat.windowWidth);
+                yPos = yDir == 0 ? DeepBeat.windowHeight/2 : (yDir == 1 ? 0 : DeepBeat.windowHeight);
+            } else if (type == DeepBeat.enemyType.diagonal) {
+// TODO travel in a diagonal
+                xDir = randBool() ? (randBool() ? -1 : 1) : 0;
+                yDir = xDir == 0 ? (randBool() ? -1 : 1) : 0;
+                xPos = xDir == 0 ? DeepBeat.windowWidth/2 : (xDir == 1 ? 0 : DeepBeat.windowWidth);
+                yPos = yDir == 0 ? DeepBeat.windowHeight/2 : (yDir == 1 ? 0 : DeepBeat.windowHeight);
+            }
         }
         
         for (var phrase = 1; phrase < 15; phrase++) {
             var speed = Math.log(phrase)*0.05 + 0.1;
             
             for (var measure = 0; measure < 8; measure++) {
-                var type = Math.random()*15<phrase
+                /*
+                type = Math.random()*15<phrase
                     ? (randBool() ? DeepBeat.enemyType.spiral : DeepBeat.enemyType.wave)
                     : DeepBeat.enemyType.linear;
+                */
+                type = DeepBeat.enemyType.diagonal;
                 var beatIncr = Math.random()*6<phrase ? ((randBool() && phrase>8) ? 0.5 : 1) : 2;
-                changeDirs(0, 0, 0, 0);
+                changeDirs();
                 
                 for (var beat = 0; beat < 4; beat+=beatIncr) {
                     if (beatIncr <= 1 && Math.random()<.5) {
@@ -135,12 +147,12 @@
                     }
                 
                     if (phrase>4 && beatIncr >= 1) {
-                        changeDirs(0, 0, 0, 0);
+                        changeDirs();
                     } else if (beatIncr < 1 && beat%2 == 1) {
                         if (randBool()) {
                             continue;
                         }
-                        changeDirs(0, 0, 0, 0);
+                        changeDirs();
                     }
                     addEnemy(enemies, phrase, measure, beat, speed, xPos, yPos, xDir, yDir, type);
                 }
@@ -371,7 +383,7 @@
         };
         this.enemies = [];
         
-        randomDesign(this.enemies);
+        randomDesign(this.enemies, 1);
 
         this.enemies = sortEnemies(this.beatRate, this.enemies);
     };
@@ -428,7 +440,7 @@
         };
         this.enemies = [];
         
-        randomDesign(this.enemies);
+        randomDesign(this.enemies, 2);
 
         this.enemies = sortEnemies(this.beatRate, this.enemies);
     };
@@ -485,7 +497,7 @@
         };
         this.enemies = [];
         
-        randomDesign(this.enemies);
+        randomDesign(this.enemies, 3);
 
         this.enemies = sortEnemies(this.beatRate, this.enemies);
     };
@@ -542,7 +554,7 @@
         };
         this.enemies = [];
         
-        randomDesign(this.enemies);
+        randomDesign(this.enemies, 4);
 
         this.enemies = sortEnemies(this.beatRate, this.enemies);
     };
