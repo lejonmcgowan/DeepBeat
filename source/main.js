@@ -72,7 +72,7 @@ DeepBeat = {
         this.stage.update();
 
         // Preload the following assets
-        var assetsPath = "../assets/";
+        var assetsPath = "assets/";
         this.manifest = [ // Be sure to define bpm of song for each level in Level.js
             {id: "tutorialMusic", src: "audio/tutorial.mp3"},
             {id: "level1Music", src: "audio/Phazd_tobycreed.mp3"},

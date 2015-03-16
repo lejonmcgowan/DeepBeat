@@ -1,12 +1,17 @@
 Deep Beat
+CPE 378 Winter 2015
 
 Team Members:
 Daniel Johnson
 Chris Williams
 LeJon McGowan
 
+HOW TO RUN:
 
+Load http://users.csc.calpoly.edu/~dpjohnso/DeepBeat/ in Chrome.
 
-1. Clone/download
+HOW TO INSTALL FROM SOURCE:
 
-2. open index.html in your favorite browser (unless you are using IE6. upgrade to 8 at least. You are everything wrong with the IT world)
+Put the entire directory on a server and load index.html in Chrome. Do not open index.html as a file, since cross origin requests are not allowed for the file protocol.
+
+One option for running a server locally: Install node, then run "npm install http-server -g", then run "http-server" in the DeepBeat directory, and load http://localhost:8080/
