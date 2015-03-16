@@ -136,9 +136,8 @@
             
             for (var measure = 0; measure < 8; measure++) {
                 type = Math.random()*15<phrase
-                    ? (randBool() ? DeepBeat.enemyType.spiral : DeepBeat.enemyType.wave)
+                    ? (randBool() ? (randBool() ? DeepBeat.enemyType.creeper : DeepBeat.enemyType.wave) : DeepBeat.enemyType.spiral)
                     : (Math.random()*8<phrase ? DeepBeat.enemyType.diagonal : DeepBeat.enemyType.linear);
-type = DeepBeat.enemyType.creeper;
                 var beatIncr = Math.random()*6<phrase ? ((randBool() && phrase>8) ? 0.5 : 1) : 2;
                 changeDirs();
                 

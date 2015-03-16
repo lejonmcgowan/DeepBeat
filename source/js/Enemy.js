@@ -122,8 +122,7 @@
             this.shape.graphics.clear();
             this.shape.graphics.beginFill("#440077").beginStroke("#7700cc").setStrokeStyle(2);
             this.shape.graphics.moveTo(SSDistortX(this.xPos - size/2, this.yPos - size/2) - this.x, SSDistortY(this.xPos - size/2, this.yPos - size/2) - this.y);
-            this.shape.graphics.lineTo(SSDistortX(this.xPos - size/2, this.yPos + size/2) - this.x, SSDistortY(this.xPos - size/2, this.yPos + size/2) - this.y);
-            this.shape.graphics.lineTo(SSDistortX(this.xPos + size/2, this.yPos + size/2) - this.x, SSDistortY(this.xPos + size/2, this.yPos + size/2) - this.y);
+            this.shape.graphics.lineTo(SSDistortX(this.xPos, this.yPos + size/2) - this.x, SSDistortY(this.xPos, this.yPos + size/2) - this.y);
             this.shape.graphics.lineTo(SSDistortX(this.xPos + size/2, this.yPos - size/2) - this.x, SSDistortY(this.xPos + size/2, this.yPos - size/2) - this.y);
             this.shape.graphics.lineTo(SSDistortX(this.xPos - size/2, this.yPos - size/2) - this.x, SSDistortY(this.xPos - size/2, this.yPos - size/2) - this.y);
             this.shape.graphics.endFill();
