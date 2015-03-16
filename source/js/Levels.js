@@ -132,21 +132,26 @@
         }
         
         for (var phrase = 1; phrase < 15; phrase++) {
-            var speed = Math.log(phrase)*0.05 + 0.1;
+            var time = phrase + 4*(difficulty-1);
+            
+            var speed = Math.log(time)*0.05 + 0.1;
             
             for (var measure = 0; measure < 8; measure++) {
-                type = Math.random()*15<phrase
+                type = Math.random()*15<time
                     ? (randBool() ? (randBool() ? DeepBeat.enemyType.creeper : DeepBeat.enemyType.wave) : DeepBeat.enemyType.spiral)
-                    : (Math.random()*8<phrase ? DeepBeat.enemyType.diagonal : DeepBeat.enemyType.linear);
-                var beatIncr = Math.random()*6<phrase ? ((randBool() && phrase>8) ? 0.5 : 1) : 2;
+                    : (Math.random()*8<time ? DeepBeat.enemyType.diagonal : DeepBeat.enemyType.linear);
+                var beatIncr = Math.random()*6<time ? ((randBool() && time>8) ? 0.5 : 1) : 2;
+                if (difficulty == 3) {
+                    beatIncr = 1;
+                }
                 changeDirs();
                 
                 for (var beat = 0; beat < 4; beat+=beatIncr) {
-                    if (beatIncr <= 1 && Math.random()<.5) {
+                    if (difficulty != 3 && beatIncr <= 1 && Math.random()<.5) {
                         continue;
                     }
                 
-                    if (phrase>4 && beatIncr >= 1) {
+                    if (time>4 && beatIncr >= 1) {
                         changeDirs();
                     } else if (beatIncr < 1 && beat%2 == 1) {
                         if (randBool()) {
