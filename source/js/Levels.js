@@ -147,6 +147,53 @@
             }
         }
     }
+    
+    // Generate enemies for tutorial level
+    var tutorialDesign = function(enemies) {
+        var phrase = 1;
+        var measure = 0;
+        var beat = 0;
+        var speed = 0.1;
+        var xPos;
+        var yPos;
+        var xDir;
+        var yDir;
+        var type = DeepBeat.enemyType.linear;
+        
+        this.changeDirs = function(pxDir, pyDir, pxPos, pyPos) {
+            xDir = (pxDir == 0 && pyDir == 0) ? (randBool() ? (randBool() ? -1 : 1) : 0) : pxDir;
+            yDir = (pxDir == 0 && pyDir == 0) ? (xDir == 0 ? (randBool() ? -1 : 1) : 0) : pyDir;
+            xPos = xDir == 0 ? DeepBeat.windowWidth/2 : (xDir == 1 ? 0 : (xDir == -1 ? DeepBeat.windowWidth : pxPos));
+            yPos = yDir == 0 ? DeepBeat.windowHeight/2 : (yDir == 1 ? 0 : (yDir == -1 ? DeepBeat.windowHeight : pyPos));
+        }
+        
+        changeDirs(-1, 0, 0, 0);
+        for (var i = 0; i < 8; i++) {
+            addEnemy(enemies, phrase, measure, beat, speed, xPos, yPos, xDir, yDir, type);
+            beat += 2;
+        }
+        
+        changeDirs(0, 1, 0, 0);
+        for (var i = 0; i < 2; i++) {
+            addEnemy(enemies, phrase, measure, beat, speed, xPos, yPos, xDir, yDir, type);
+            beat += 2;
+        }
+        changeDirs(1, 0, 0, 0);
+        for (var i = 0; i < 2; i++) {
+            addEnemy(enemies, phrase, measure, beat, speed, xPos, yPos, xDir, yDir, type);
+            beat += 2;
+        }
+        changeDirs(0, -1, 0, 0);
+        for (var i = 0; i < 2; i++) {
+            addEnemy(enemies, phrase, measure, beat, speed, xPos, yPos, xDir, yDir, type);
+            beat += 2;
+        }
+        changeDirs(-1, 0, 0, 0);
+        for (var i = 0; i < 2; i++) {
+            addEnemy(enemies, phrase, measure, beat, speed, xPos, yPos, xDir, yDir, type);
+            beat += 2;
+        }
+    }
 
     window.DeepBeatLevels = {};
 
@@ -267,7 +314,7 @@
         };
         this.enemies = [];
         
-        randomDesign(this.enemies);
+        tutorialDesign(this.enemies);
 
         this.enemies = sortEnemies(this.beatRate, this.enemies);
     };
