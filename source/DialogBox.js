@@ -4,6 +4,7 @@
 
  	function DialogBox(text,canvasWidth, time)
  	{
+ 		console.log("TEXT: " + text);
 		this.Container_constructor();
  		width = canvasWidth;
 
