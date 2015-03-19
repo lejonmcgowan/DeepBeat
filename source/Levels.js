@@ -216,7 +216,7 @@
         var logo = new createjs.Bitmap(DeepBeat.preload.getResult("logo"));
         this.currentTime = createjs.Ticker.getTime();
         var currentLevel = this;
-
+        this.dialog = [];
         this.dialog.push(new DialogTiming(function()
             {
                 return createjs.Ticker.getTime() - currentLevel.currentTime > 1500;
@@ -357,6 +357,7 @@
         this.currentTime = createjs.Ticker.getTime();
         var currentLevel = this;
         //dialog
+        this.dialog = [];
         this.dialog.push(new DialogTiming(function()
             {
                 return createjs.Ticker.getTime() - currentLevel.currentTime > 1500;
@@ -411,7 +412,7 @@
     });
     
     // Define first level
-    window.DeepBeatLevels.Level1 = function(stage) {
+    window.DeepBeatLevels.Level1 = function(stage, currrentTime) {
         Level.apply(this, [stage]);
         var lev = this;
         this.health = new HealthBar();
@@ -420,9 +421,10 @@
         this.objects.alpha = 0;
         this.alphaDir = 1;
         this.won = false;
-
-        this.objects.addChild(new Gun());
-        this.objects.addChild(new SpaceStation());
+        var gun = new Gun();
+        var spaceStation = new SpaceStation();
+        this.objects.addChild(gun);
+        this.objects.addChild(spaceStation);
 
         stage.addChild(this.objects);
        
@@ -437,12 +439,21 @@
         randomDesign(this.enemies, 1);
 
         this.enemies = sortEnemies(this.beatRate, this.enemies);
+
+        //dialog
+        this.dialog = [];
+        this.currentTime = createjs.Ticker.getTime();
+        this.dialog.push(new DialogTiming(function()
+            {
+                return gun.laserOverheat > 250;
+            },DIALOG.OVERHEAT,5));
     };
 
     window.DeepBeatLevels.Level1.prototype = _.extend(new Level(), {
         beatRate: bpmToBeatRate(165), // define the BPM of the song here
-        
         tick: function() {
+            this.handleDialog();
+            console.log( ((createjs.Ticker.getTime()) - this.currentTime / 1000).toFixed(3) );
             this.spawnEnemies();
             if(this.objects.alpha < 1 && this.alphaDir == 1) {
                 this.objects.alpha += DeepBeat.dt / 1000;

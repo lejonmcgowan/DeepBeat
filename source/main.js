@@ -125,7 +125,7 @@ DeepBeat = {
         this.collisionTypes.Enemy = []; // reset all collisions
         this.collisionFroms = [];
         this.stage.addChild(this.background);
-        this.currentLevel = new level(this.stage);
+        this.currentLevel = new level(this.stage, createjs.Ticker.getTime());
     },
 
     tick: function(event) {
