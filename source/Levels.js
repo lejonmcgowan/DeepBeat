@@ -525,9 +525,10 @@
         this.objects.alpha = 0;
         this.alphaDir = 1;
         this.won = false;
-
-        this.objects.addChild(new Gun());
-        this.objects.addChild(new SpaceStation());
+        var gun = new Gun();
+        this.objects.addChild(gun);
+        var spaceStation = new SpaceStation();
+        this.objects.addChild(spaceStation);
 
         stage.addChild(this.objects);
        
@@ -542,12 +543,37 @@
         randomDesign(this.enemies, 2);
 
         this.enemies = sortEnemies(this.beatRate, this.enemies);
+
+        //dialog
+        this.dialog = [];
+        this.currentTime = createjs.Ticker.getTime();
+        var currentLevel = this;
+        this.dialog.push(new DialogTiming(function()
+            {
+                return gun.laserOverheat > 250;
+            },DIALOG.OVERHEAT2,5));
+
+        this.dialog.push(new DialogTiming(function()
+            {
+                console.log( (createjs.Ticker.getTime() - currentLevel.currentTime) / 1000);
+                return false;
+            },"",0));
+         this.dialog.push(new DialogTiming(function()
+            {
+                return currentLevel.health.health < 50;
+            },DIALOG.HALF_DAMAGE,4));
+
+          this.dialog.push(new DialogTiming(function()
+            {
+                return currentLevel.health.health < 10;
+            },DIALOG.CRITICAL,4));
     };
 
     window.DeepBeatLevels.Level2.prototype = _.extend(new Level(), {
         beatRate: bpmToBeatRate(150.5), // define the BPM of the song here
         
         tick: function() {
+            this.handleDialog();
             this.spawnEnemies();
             if(this.objects.alpha < 1 && this.alphaDir == 1) {
                 this.objects.alpha += DeepBeat.dt / 1000;
@@ -583,8 +609,10 @@
         this.alphaDir = 1;
         this.won = false;
 
-        this.objects.addChild(new Gun());
-        this.objects.addChild(new SpaceStation());
+         var gun = new Gun();
+        this.objects.addChild(gun);
+        var spaceStation = new SpaceStation();
+        this.objects.addChild(spaceStation);
 
         stage.addChild(this.objects);
        
@@ -599,12 +627,37 @@
         randomDesign(this.enemies, 3);
 
         this.enemies = sortEnemies(this.beatRate, this.enemies);
+
+        //dialog
+        this.dialog = [];
+        this.currentTime = createjs.Ticker.getTime();
+        var currentLevel = this;
+        this.dialog.push(new DialogTiming(function()
+            {
+                return gun.laserOverheat > 250;
+            },DIALOG.OVERHEAT2,5));
+
+        this.dialog.push(new DialogTiming(function()
+            {
+                console.log( (createjs.Ticker.getTime() - currentLevel.currentTime) / 1000);
+                return false;
+            },"",0));
+         this.dialog.push(new DialogTiming(function()
+            {
+                return currentLevel.health.health < 50;
+            },DIALOG.HALF_DAMAGE,4));
+
+          this.dialog.push(new DialogTiming(function()
+            {
+                return currentLevel.health.health < 10;
+            },DIALOG.CRITICAL,4));
     };
 
     window.DeepBeatLevels.Level3.prototype = _.extend(new Level(), {
         beatRate: bpmToBeatRate(162.32), // define the BPM of the song here
         
         tick: function() {
+            this.handleDialog();
             this.spawnEnemies();
             if(this.objects.alpha < 1 && this.alphaDir == 1) {
                 this.objects.alpha += DeepBeat.dt / 1000;
@@ -640,8 +693,10 @@
         this.alphaDir = 1;
         this.won = false;
 
-        this.objects.addChild(new Gun());
-        this.objects.addChild(new SpaceStation());
+         var gun = new Gun();
+        this.objects.addChild(gun);
+        var spaceStation = new SpaceStation();
+        this.objects.addChild(spaceStation);
 
         stage.addChild(this.objects);
        
@@ -656,12 +711,37 @@
         randomDesign(this.enemies, 4);
 
         this.enemies = sortEnemies(this.beatRate, this.enemies);
+
+        //dialog
+        this.dialog = [];
+        this.currentTime = createjs.Ticker.getTime();
+        var currentLevel = this;
+        this.dialog.push(new DialogTiming(function()
+            {
+                return gun.laserOverheat > 250;
+            },DIALOG.OVERHEAT2,5));
+
+        this.dialog.push(new DialogTiming(function()
+            {
+                console.log( (createjs.Ticker.getTime() - currentLevel.currentTime) / 1000);
+                return false;
+            },"",0));
+         this.dialog.push(new DialogTiming(function()
+            {
+                return currentLevel.health.health < 50;
+            },DIALOG.HALF_DAMAGE,4));
+
+          this.dialog.push(new DialogTiming(function()
+            {
+                return currentLevel.health.health < 10;
+            },DIALOG.CRITICAL,4));
     };
 
     window.DeepBeatLevels.Bonus.prototype = _.extend(new Level(), {
         beatRate: bpmToBeatRate(125.27), // define the BPM of the song here
         
         tick: function() {
+            this.handleDialog();
             this.spawnEnemies();
             if(this.objects.alpha < 1 && this.alphaDir == 1) {
                 this.objects.alpha += DeepBeat.dt / 1000;
