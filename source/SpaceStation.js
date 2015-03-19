@@ -4,7 +4,7 @@
         this.Container_constructor();
 
         this.size = 140;
-
+        this.hit = false;
         this.collision = new createjs.Bitmap(new Image(this.size,this.size));
         this.collision.x = 0;
         this.collision.y = 0;
@@ -134,6 +134,7 @@
 
         if(collide || Math.abs(x) < 30 && Math.abs(y) < 30) {
             this.removeEnemy(other);
+            this.hit = true;
         }
     }
 

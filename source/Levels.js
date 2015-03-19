@@ -361,17 +361,17 @@
         this.dialog.push(new DialogTiming(function()
             {
                 return createjs.Ticker.getTime() - currentLevel.currentTime > 1500;
-            },DIALOG.WELCOME,3));
+            },DIALOG.WELCOME,2));
 
         this.dialog.push(new DialogTiming(function()
             {
-                return createjs.Ticker.getTime() - currentLevel.currentTime > 5000;
-            },DIALOG.CONTROLS,3));
+                return createjs.Ticker.getTime() - currentLevel.currentTime > 4000;
+            },DIALOG.CONTROLS,2));
 
         this.dialog.push(new DialogTiming(function()
             {
-                return createjs.Ticker.getTime() - currentLevel.currentTime > 9000;
-            },DIALOG.GOAL,5));
+                return createjs.Ticker.getTime() - currentLevel.currentTime > 6000;
+            },DIALOG.GOAL,7));
 
         this.dialog.push(new DialogTiming(function()
             {
@@ -443,17 +443,54 @@
         //dialog
         this.dialog = [];
         this.currentTime = createjs.Ticker.getTime();
+        var currentLevel = this;
         this.dialog.push(new DialogTiming(function()
             {
                 return gun.laserOverheat > 250;
-            },DIALOG.OVERHEAT,5));
+            },DIALOG.OVERHEAT2,5));
+
+        this.dialog.push(new DialogTiming(function()
+            {
+                console.log( (createjs.Ticker.getTime() - currentLevel.currentTime) / 1000);
+                return false;
+            },"",0));
+
+        this.dialog.push(new DialogTiming(function()
+            {
+                return createjs.Ticker.getTime() - currentLevel.currentTime > 8000;
+            },DIALOG.LEVEL1_INTRO,4));
+        this.dialog.push(new DialogTiming(function()
+            {
+                return spaceStation.hit;
+            },DIALOG.LEVEL1_HIT,4));
+        this.dialog.push(new DialogTiming(function()
+            {
+                return createjs.Ticker.getTime() - currentLevel.currentTime > 75000;
+            },DIALOG.LEVEL1_MID,4));
+        this.dialog.push(new DialogTiming(function()
+            {
+                return createjs.Ticker.getTime() - currentLevel.currentTime > 120000;
+            },DIALOG.LEVEL1_MID2,4));
+        this.dialog.push(new DialogTiming(function()
+            {
+                return createjs.Ticker.getTime() - currentLevel.currentTime > 150000;
+            },DIALOG.LEVEL1_MID3,4));
+
+         this.dialog.push(new DialogTiming(function()
+            {
+                return currentLevel.health.health < 50;
+            },DIALOG.HALF_DAMAGE,4));
+
+          this.dialog.push(new DialogTiming(function()
+            {
+                return currentLevel.health.health < 10;
+            },DIALOG.CRITICAL,4));
     };
 
     window.DeepBeatLevels.Level1.prototype = _.extend(new Level(), {
         beatRate: bpmToBeatRate(165), // define the BPM of the song here
         tick: function() {
             this.handleDialog();
-            console.log( ((createjs.Ticker.getTime()) - this.currentTime / 1000).toFixed(3) );
             this.spawnEnemies();
             if(this.objects.alpha < 1 && this.alphaDir == 1) {
                 this.objects.alpha += DeepBeat.dt / 1000;

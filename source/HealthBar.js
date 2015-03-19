@@ -62,7 +62,6 @@
             var sfx = createjs.Sound.play("explosionSFX");
             //sfx.volume = 0.3;
         }
-
         //this.bar.graphics.clear();
         //this.bar.graphics.beginFill("rgba("+parseInt((100-health)*2.55)+","+parseInt((health)*2.55)+",0,1)");
         //this.bar.graphics.drawRect(0,0,health,20);
