@@ -31,8 +31,10 @@
 
         stage: null,
         enemies: [],
+        dialog: [],
         music: null,
         beatRate: 1000,
+        currentTime: 0,
 
         getTimeToBeat: function() {
             return Math.min(this.music.getPosition() % this.beatRate, this.beatRate - this.music.getPosition() % this.beatRate);
@@ -45,9 +47,17 @@
         lostLevel: function() {},
 
         musicDone: function() {},
-    };
-
-
+        handleDialog: function()
+        {
+            for (var index = 0; index < this.dialog.length; index++) {
+                if(this.dialog[index].condition())
+                {
+                    this.stage.addChild(new DialogBox(this.dialog[index].text,640, this.dialog[index].timeVisible, this.stage));
+                    this.dialog.splice(index,1);
+                }
+            }
+        }
+    }
     //sort enemies by the order they will be spawned, regardless of when they are destroyed.
     var sortEnemies = function(beatRate, enemies) {
         return enemies.sort(function(a, b) {
@@ -55,18 +65,6 @@
             - (b.beat * beatRate - b.type.prototype.timeToSound(b.params));
         });
     };
-
-    /*
-    var addDiagonal = function(enemies, beatStart, number, beatIncrement, speed, xDir, yDir, startX, startY, endX, endY) {
-        for(var i = 0; i < number; i++) {
-            enemies.push({
-                beat: beatStart + i * beatIncrement,
-                type: Enemy,
-                params: [startX + i * (endX - startX) / number, startY + i * (endY - startY) / number, xDir, yDir, speed]
-            });
-        }
-    };
-    */
     
     var addEnemy = function(enemies, phrase, measure, beat, speed, xDir, yDir, type) {
         enemies.push({
@@ -216,12 +214,19 @@
 
     window.DeepBeatLevels.MainMenu = function(stage) {
         var logo = new createjs.Bitmap(DeepBeat.preload.getResult("logo"));
+        this.currentTime = createjs.Ticker.getTime();
+        var currentLevel = this;
+
+        this.dialog.push(new DialogTiming(function()
+            {
+                return createjs.Ticker.getTime() - currentLevel.currentTime > 1500;
+            },DIALOG.MENU_HELP,3));
+
         stage.addChild(logo);
         logo.x = 100;
         logo.y = 50;
         DeepBeat.canvas.style.backgroundColor = "black";
         Level.apply(this, [stage]);
-        stage.addChild(new DialogBox(DIALOG.intoductoryTexts,640, 3));
         stage.addChild(new Menu([{
             text: "Tutorial",
             level: window.DeepBeatLevels.Tutorial
@@ -241,8 +246,16 @@
             text: "Credits",
             level: window.DeepBeatLevels.HelpMenu
         }]));
-    };
-    window.DeepBeatLevels.MainMenu.prototype = _.extend(new Level(), {});
+
+
+    }
+    window.DeepBeatLevels.MainMenu.prototype = _.extend(new Level(), 
+    {
+        tick: function()
+        {
+            this.handleDialog();
+        }
+    });
 
     window.DeepBeatLevels.LoseMenu = function(stage) {
         Level.apply(this, [stage]);
@@ -301,7 +314,12 @@
         songs.y = 420;
         stage.addChild(songs);
     };
-    window.DeepBeatLevels.HelpMenu.prototype = _.extend(new Level(), {});
+    window.DeepBeatLevels.HelpMenu.prototype = _.extend(new Level(), 
+    {
+        tick: function() {
+            this.handleDialog();
+        }
+    });
 
     function goToWinMenu(event) {
         DeepBeat.setLevel(DeepBeatLevels.WinMenu);
@@ -318,7 +336,8 @@
         this.alphaDir = 1;
         this.won = false;
 
-        this.objects.addChild(new Gun());
+        var gun = new Gun();
+        this.objects.addChild(gun);
         this.objects.addChild(new SpaceStation());
 
         stage.addChild(this.objects);
@@ -334,12 +353,39 @@
         tutorialDesign(this.enemies);
 
         this.enemies = sortEnemies(this.beatRate, this.enemies);
+
+        this.currentTime = createjs.Ticker.getTime();
+        var currentLevel = this;
+        //dialog
+        this.dialog.push(new DialogTiming(function()
+            {
+                return createjs.Ticker.getTime() - currentLevel.currentTime > 1500;
+            },DIALOG.WELCOME,3));
+
+        this.dialog.push(new DialogTiming(function()
+            {
+                return createjs.Ticker.getTime() - currentLevel.currentTime > 5000;
+            },DIALOG.CONTROLS,3));
+
+        this.dialog.push(new DialogTiming(function()
+            {
+                return createjs.Ticker.getTime() - currentLevel.currentTime > 9000;
+            },DIALOG.GOAL,5));
+
+        this.dialog.push(new DialogTiming(function()
+            {
+                return gun.laserOverheat > 250;
+            },DIALOG.OVERHEAT,5));
+
+
+
     };
 
     window.DeepBeatLevels.Tutorial.prototype = _.extend(new Level(), {
         beatRate: bpmToBeatRate(127), // define the BPM of the song here
         
         tick: function() {
+            this.handleDialog();
             this.spawnEnemies();
             if(this.objects.alpha < 1 && this.alphaDir == 1) {
                 this.objects.alpha += DeepBeat.dt / 1000;
